@@ -12,7 +12,7 @@ public class GymUnitTest {
         Gym gym = new Gym("Fitness Everyhere","f9bfp43");
         User user = mock(User.class);
         when(user.getName()).thenReturn("Matheus Gomes");
-        when(user.getEmail()).thenReturn("msau@gmail.com");
+        when(user.getEmail()).thenReturn("msau@gmal.com");
         when(user.getPassword()).thenReturn("nnfo5tnb");
 
         GymInvite expectedInvite = mock(GymInvite.class);
