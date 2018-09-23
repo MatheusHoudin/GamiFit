@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "190710709924",
+    "firebase_url": "https://gamifit-f11c5.firebaseio.com",
+    "project_id": "gamifit-f11c5",
+    "storage_bucket": "gamifit-f11c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190710709924:android:6b766fd8afcd8728",
+        "android_client_info": {
+          "package_name": "com.br.gamifit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190710709924-qsf3dl4ur93sa7gddodlu3fdffsk4lid.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.br.gamifit",
+            "certificate_hash": "d4799f6e8f0de24ed77141df2e1c018a43804f86"
+          }
+        },
+        {
+          "client_id": "190710709924-e08s5p4goi4rv0ri9j3u6pvfe6fu301i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYnoyY7ypJpiW_hSo-D3f_4fq4T2_1p4s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190710709924-e08s5p4goi4rv0ri9j3u6pvfe6fu301i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

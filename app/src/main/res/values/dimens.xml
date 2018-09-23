@@ -1,0 +1,17 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="app_name_size">35sp</dimen>
+    <dimen name="width_login_field">322dp</dimen>
+    <dimen name="height_login_field">42dp</dimen>
+    <dimen name="width_login_button">287dp</dimen>
+    <dimen name="height_login_button">55dp</dimen>
+    <dimen name="padding_left_login_field">10dp</dimen>
+    <dimen name="already_have_account_size">15sp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>
+
