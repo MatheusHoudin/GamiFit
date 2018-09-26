@@ -78,6 +78,6 @@ public class GymInvite{
     @Override
     public int hashCode() {
         //TODO use the FirebaseAuth id instead of name
-        return gym.hashCode()+user.hashCode();
+        return getGym().hashCode()+getUser().hashCode();
     }
 }

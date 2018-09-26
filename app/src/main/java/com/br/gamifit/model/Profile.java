@@ -9,6 +9,8 @@ public class Profile {
     private Progress progress;
     private boolean active;
 
+    public Profile(){}
+
     public Profile(Gym gym,User user,Progress progress){
         this.setGym(gym);
         this.setUser(user);

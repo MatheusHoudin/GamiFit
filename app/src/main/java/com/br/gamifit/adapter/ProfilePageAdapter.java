@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.br.gamifit.fragment.FeedSocialFragment;
+import com.br.gamifit.fragment.ProfileFragment;
 import com.br.gamifit.fragment.UsersSocialFragment;
 
 public class ProfilePageAdapter extends FragmentPagerAdapter {
@@ -21,6 +22,8 @@ public class ProfilePageAdapter extends FragmentPagerAdapter {
                 return new UsersSocialFragment();
             case 1:
                 return new FeedSocialFragment();
+            case 2:
+                return new ProfileFragment();
         }
         return null;
     }

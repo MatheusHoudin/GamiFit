@@ -38,7 +38,7 @@ public class DashboardActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         ViewPager viewPager = findViewById(R.id.profile_view_pager);
-        PagerAdapter adapter = new ProfilePageAdapter(getSupportFragmentManager(),2);
+        PagerAdapter adapter = new ProfilePageAdapter(getSupportFragmentManager(),3);
         viewPager.setAdapter(adapter);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
