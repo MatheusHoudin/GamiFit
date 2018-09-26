@@ -14,16 +14,14 @@ public class SocialFragmentController {
     private Context context;
     private static SocialFragmentController controller;
 
-    private User user;
 
-    private SocialFragmentController(Context context, User user){
+    private SocialFragmentController(Context context){
         this.setContext(context);
-        this.setUser(user);
     }
 
-    public static SocialFragmentController getInstance(Context context, User user){
+    public static SocialFragmentController getInstance(Context context){
         if(controller==null){
-            controller = new SocialFragmentController(context,user);
+            controller = new SocialFragmentController(context);
         }
         return controller;
     }
@@ -51,11 +49,4 @@ public class SocialFragmentController {
         this.context = context;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

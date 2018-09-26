@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,14 +28,14 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment {
-    private List<Profile> profiles;
+public class ProfileListFragment extends Fragment {
 
     private ProfileFragmentController profileFragmentController;
 
-    public ProfileFragment(){
-        profiles = new ArrayList<>();
-        profileFragmentController = ProfileFragmentController.getProfileFragmentController(getContext());
+
+    public ProfileListFragment(){
+        profileFragmentController = ProfileFragmentController.getProfileFragmentController(this);
+
     }
 
     @Override
@@ -45,6 +46,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        profileFragmentController.getAllMyProfiles();
     }
 
 
@@ -53,27 +55,14 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         RecyclerView profilesListView = v.findViewById(R.id.profile_list);
-        ProfileListAdapter profileListAdapter = new ProfileListAdapter(getContext(),profiles);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        profilesListView.setLayoutManager(linearLayoutManager);
-        profilesListView.setAdapter(profileListAdapter);
-        initializeItems();
-        profileListAdapter.notifyDataSetChanged();
+        RecyclerView.LayoutManager a = new GridLayoutManager(getContext(),2);
+        profilesListView.setLayoutManager(a);
+        profilesListView.setAdapter(profileFragmentController.getProfileListAdapter());
         return v;
     }
 
-    private void initializeItems(){
-        Gym gym = new Gym("Arena","pabf44fre");
-        Gym gym1 = new Gym("Iron","pabf44fre");
-        Gym gym2 = new Gym("Porra Birl","pabf44fre");
 
-        Profile profile = new Profile(gym,null,new Progress(3));
-        Profile profile1 = new Profile(gym1,null,new Progress(7));
-        Profile profile2 = new Profile(gym2,null,new Progress(1));
-        profiles.add(profile);
-        profiles.add(profile1);
-        profiles.add(profile2);
-    }
+
 
 }

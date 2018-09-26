@@ -20,13 +20,12 @@ public class FeedSocialFragment extends Fragment {
     private List<User> users;
 
 
-
     private SocialFragmentController controller;
 
 
     public FeedSocialFragment() {
         Gym gym = new Gym("Arena Fitness","f9r4fn4o4");
-        controller = SocialFragmentController.getInstance(getContext(),new User());
+        controller = SocialFragmentController.getInstance(getContext());
         users = new ArrayList<>();
 
     }

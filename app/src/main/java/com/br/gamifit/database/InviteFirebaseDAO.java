@@ -9,6 +9,7 @@ import com.google.android.gms.common.data.DataBufferObserver;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Observable;
@@ -16,15 +17,16 @@ import java.util.Observable;
 public class InviteFirebaseDAO extends Observable {
 
     public boolean createInvite(GymInvite invite) {
-        DatabaseReference reference = Connection.getDatabaseReference();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         String generatedCode = reference.child("invite").push().getKey();
         invite.setCode(generatedCode);
         return reference.child("invite").child(invite.getCode()).setValue(invite).isSuccessful();
     }
 
-    public void getUserInvites(String code) {
-        DatabaseReference reference = Connection.getDatabaseReference();
-        reference.child("invite").orderByChild("user/code").equalTo(code).addValueEventListener(new ValueEventListener() {
+    public void getUserInvites(String userCode) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("invite").orderByChild("user/code").equalTo(userCode).addValueEventListener(
+                new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChildren()){
@@ -45,11 +47,8 @@ public class InviteFirebaseDAO extends Observable {
     }
 
     public boolean delete(GymInvite gymInvite){
-        DatabaseReference databaseReference = Connection.getDatabaseReference();
-        return databaseReference.child("invite").child(gymInvite.getCode()).removeValue().isSuccessful();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        return reference.child("invite").child(gymInvite.getCode()).removeValue().isSuccessful();
     }
-
-
-
 
 }

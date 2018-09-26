@@ -38,7 +38,7 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
     private FirebaseAuth firebaseAuth;
 
     public UserFirebaseDAO(){
-        firebaseDatabase = Connection.getDatabaseReference();
+        firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
     }
 

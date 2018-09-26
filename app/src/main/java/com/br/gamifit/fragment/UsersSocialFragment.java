@@ -29,7 +29,7 @@ public class UsersSocialFragment extends android.support.v4.app.Fragment {
 
     public UsersSocialFragment(){
         users = new ArrayList<>();
-        controller = SocialFragmentController.getInstance(getContext(),new User());
+        controller = SocialFragmentController.getInstance(getContext());
     }
 
     @Override
@@ -54,6 +54,7 @@ public class UsersSocialFragment extends android.support.v4.app.Fragment {
 
         GymInviteListAdapter inviteListAdapter = new GymInviteListAdapter(getContext(), users);
         listView.setAdapter(inviteListAdapter);
+
         controller.getAllUsersToInvite(users, inviteListAdapter);
 
         materialSearchView = view.findViewById(R.id.search_view);

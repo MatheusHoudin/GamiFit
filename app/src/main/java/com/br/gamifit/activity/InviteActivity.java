@@ -28,7 +28,7 @@ public class InviteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite);
 
-        controller = SocialFragmentController.getInstance(getApplicationContext(),new User());
+        controller = SocialFragmentController.getInstance(getApplicationContext());
 
         ListView listView = findViewById(R.id.list_users);
         List<User> users = new ArrayList<>();

@@ -26,7 +26,8 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileViewHolder> 
     @NonNull
     @Override
     public ProfileViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ProfileViewHolder(LayoutInflater.from(context).inflate(R.layout.profile_item_list,null));
+        return new ProfileViewHolder(LayoutInflater.from(parent.getContext()).
+                inflate(R.layout.profile_item_list,parent,false));
     }
 
     @Override
