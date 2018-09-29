@@ -9,8 +9,10 @@ import com.br.gamifit.model.Gym;
 import com.br.gamifit.model.User;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class SocialFragmentController {
+public class SocialFragmentController implements Observer {
     private Context context;
     private static SocialFragmentController controller;
 
@@ -49,4 +51,8 @@ public class SocialFragmentController {
         this.context = context;
     }
 
+    @Override
+    public void update(Observable observable, Object o) {
+
+    }
 }

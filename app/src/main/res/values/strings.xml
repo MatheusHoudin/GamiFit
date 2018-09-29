@@ -52,4 +52,7 @@
     <string name="accept">Aceitar</string>
     <string name="reject">Rejeitar</string>
 
+    <string name="follow_user">Seguir</string>
+    <string name="title_activity_gym_profile">GymProfileActivity</string>
+
 </resources>

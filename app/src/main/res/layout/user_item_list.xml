@@ -37,7 +37,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="14dp"
         android:layout_weight="0"
-        android:text="Convidar" />
+        android:text="@string/follow_user" />
 
 
 </LinearLayout>

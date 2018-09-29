@@ -1,6 +1,7 @@
 package com.br.gamifit.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.br.gamifit.R;
+import com.br.gamifit.dao_factory.FirebaseFactory;
+import com.br.gamifit.database.InviteFirebaseDAO;
 import com.br.gamifit.model.GymInvite;
 import com.google.android.gms.common.data.DataBufferObserver;
 
@@ -79,6 +82,10 @@ public class ReceivedInviteListAdapter extends BaseAdapter{
     }
 
     private void removeInvite(GymInvite invite){
+        InviteFirebaseDAO inviteFirebaseDAO = FirebaseFactory.getInviteFirebaseDAO();
+        if(inviteFirebaseDAO.delete(invite)){
+            Log.i("Remove","Removed sucessfully");
+        }
         gymInvites.remove(invite);
         this.notifyDataSetChanged();
     }

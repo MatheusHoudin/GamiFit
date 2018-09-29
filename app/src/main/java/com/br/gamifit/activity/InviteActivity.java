@@ -35,20 +35,6 @@ public class InviteActivity extends AppCompatActivity {
         inviteListAdapter = new GymInviteListAdapter(getApplicationContext(), users);
         listView.setAdapter(inviteListAdapter);
         findAllUsers();
-        User user = new User("Firmino","ma@gmail.com","firmo");
-        User user1 = new User("Joao","joa@gmail.com","spmkf");
-        User user2 = new User("Perla","per@gmail.com","maiggsm435a");
-        User user3 = new User("maio","mai@gmail.com","maiyhsma");
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        user.setCode(databaseReference.child("user").push().getKey());
-        databaseReference.child("user").push().setValue(user);
-        user1.setCode(databaseReference.child("user").push().getKey());
-        databaseReference.child("user").push().setValue(user1);
-        user2.setCode(databaseReference.child("user").push().getKey());
-        databaseReference.child("user").push().setValue(user2);
-        user3.setCode(databaseReference.child("user").push().getKey());
-        databaseReference.child("user").push().setValue(user3);
     }
 
     private AdapterView.OnItemClickListener onClickItemInvite = new AdapterView.OnItemClickListener() {

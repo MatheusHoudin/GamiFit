@@ -32,7 +32,7 @@ public class InvitationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         invitationController = InvitationController.getInvitationController(this);
     }
@@ -45,6 +45,5 @@ public class InvitationActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         invitationController.findMyInvites();
-        invitationController.getAdapter().notifyDataSetChanged();
     }
 }

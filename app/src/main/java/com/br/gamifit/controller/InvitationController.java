@@ -52,7 +52,7 @@ public class InvitationController implements Observer {
         String loggedUserCode = MyPreferences.getMyPreferences(context).getUserCode();
         InviteFirebaseDAO inviteFirebaseDAO = FirebaseFactory.getInviteFirebaseDAO();
         Log.i("logged code",loggedUserCode);
-        invites.clear();
+//        invites.clear();
         inviteFirebaseDAO.getUserInvites(loggedUserCode);
     }
 

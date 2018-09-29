@@ -22,18 +22,17 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileViewHolder> 
         this.profilesList = profiles;
     }
 
-
     @NonNull
     @Override
     public ProfileViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ProfileViewHolder(LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.profile_item_list,parent,false));
+                inflate(R.layout.profile_item_list,parent,false),this.context);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ProfileViewHolder holder, int position) {
         holder.getGymName().setText(profilesList.get(position).getGym().getName());
-        // holder.getOffensiveDays().setText(profilesList.get(position).getProgress().getOffensiveDays());
+        holder.getOffensiveDays().setText(profilesList.get(position).getProgress().getOffensiveDays());
     }
 
     @Override

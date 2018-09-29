@@ -25,16 +25,9 @@ public class DashboardController {
         return dashboardController;
     }
 
-    private MenuItem.OnMenuItemClickListener invitesMenuItemClickListener = new MenuItem.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem menuItem) {
-            Intent intent = new Intent(dashboardView, InvitationActivity.class);
-            dashboardView.startActivity(intent);
-            return true;
-        }
-    };
-
-    public MenuItem.OnMenuItemClickListener getInvitesMenuItemClickListener() {
-        return invitesMenuItemClickListener;
+    public void openInvitesActivity(){
+        Intent intent = new Intent(dashboardView, InvitationActivity.class);
+        dashboardView.startActivity(intent);
     }
+
 }

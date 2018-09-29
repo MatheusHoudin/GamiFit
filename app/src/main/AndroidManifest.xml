@@ -48,8 +48,13 @@
             android:name=".activity.DashboardActivity"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.InvitationActivity" android:parentActivityName=".activity.DashboardActivity">
-        </activity>
+        <activity
+            android:name=".activity.InvitationActivity"
+            android:parentActivityName=".activity.DashboardActivity"></activity>
+        <activity
+            android:name=".activity.GymProfileActivity"
+            android:label="@string/title_activity_gym_profile"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
