@@ -23,8 +23,6 @@ public class GymActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.gym_view_pager);
         setSupportActionBar(toolbar);
 
-        
-
         PagerAdapter pagerAdapter = new ProfilePageAdapter(getSupportFragmentManager(), 1);
         viewPager.setAdapter(pagerAdapter);
         TextView mTextMessage = findViewById(R.id.message);

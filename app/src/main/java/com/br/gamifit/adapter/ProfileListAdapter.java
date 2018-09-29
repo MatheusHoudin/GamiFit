@@ -32,7 +32,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ProfileViewHolder holder, int position) {
         holder.getGymName().setText(profilesList.get(position).getGym().getName());
-        holder.getOffensiveDays().setText(profilesList.get(position).getProgress().getOffensiveDays());
+       // holder.getOffensiveDays().setText(profilesList.get(position).getProgress().getOffensiveDays());
     }
 
     @Override

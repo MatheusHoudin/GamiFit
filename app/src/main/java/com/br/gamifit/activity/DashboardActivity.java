@@ -20,11 +20,6 @@ import android.widget.TextView;
 import com.br.gamifit.R;
 import com.br.gamifit.adapter.ProfilePageAdapter;
 import com.br.gamifit.controller.DashboardController;
-import com.br.gamifit.helper.MyPreferences;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import org.w3c.dom.Text;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -51,6 +46,13 @@ public class DashboardActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         dashboardController = DashboardController.getDashboardController(this);
+        FloatingActionButton fab = findViewById(R.id.fab_create_gym);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dashboardController.openCreateGymActivity();
+            }
+        });
     }
 
     @Override

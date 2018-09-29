@@ -48,6 +48,7 @@
     <string name="users">Usuários</string>
     <string name="action_invite">Convites</string>
     <string name="notifications_activity">Convites</string>
+    <string name="create_gym_activity">Cadastrar Academia</string>
 
     <string name="accept">Aceitar</string>
     <string name="reject">Rejeitar</string>

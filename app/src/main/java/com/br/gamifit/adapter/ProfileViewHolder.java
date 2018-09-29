@@ -1,13 +1,17 @@
 package com.br.gamifit.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.br.gamifit.R;
+import com.br.gamifit.activity.GymProfileActivity;
 
 public class ProfileViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private ImageView gymImage;
@@ -21,13 +25,20 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder implements View.O
         this.context = context;
         gymImage = itemView.findViewById(R.id.gym_image);
         gymName = itemView.findViewById(R.id.gym_name);
+        Log.i("teste",gymName.getText().toString());
         offensiveDays = itemView.findViewById(R.id.offensive_days);
         itemView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        Toast.makeText(this.context,"Clicked Gym: "+this.getGymName().getText().toString(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"Clicked Gym: "+this.gymName.getText().toString(),Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(context, GymProfileActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("GymName",this.gymName.getText().toString());
+        intent.putExtras(bundle);
+
+        context.startActivity(intent);
     }
 
     public ImageView getGymImage() {

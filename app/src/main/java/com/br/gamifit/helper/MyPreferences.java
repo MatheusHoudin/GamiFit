@@ -36,7 +36,6 @@ public class MyPreferences {
     public static MyPreferences getMyPreferences(Context context){
         if(myPreferences==null){
             myPreferences = new MyPreferences(context);
-
         }
         return myPreferences;
     }
