@@ -32,6 +32,7 @@
     <string name="email_field_hint">Digite seu email</string>
     <string name="password_field_hint">Digite sua senha</string>
     <string name="name_field_hint">Digite seu nome</string>
+    <string name="gym_name_field_hint">Nome da academia</string>
     <string name="create_account_field">Criar conta</string>
     <string name="already_have_account">Já tem uma conta?</string>
     <string name="title_activity_dashboard">DashboardActivity</string>

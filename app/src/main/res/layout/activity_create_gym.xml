@@ -12,8 +12,20 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
+        app:titleTextColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/create_gym_activity"></android.support.v7.widget.Toolbar>
+
+    <EditText
+        android:layout_width="@dimen/width_login_field"
+        android:layout_height="@dimen/height_login_field"
+        android:paddingLeft="@dimen/padding_left_login_field"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/login_text_field_style"
+        android:hint="@string/gym_name_field_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_gym_toolbar" />
 
 </android.support.constraint.ConstraintLayout>

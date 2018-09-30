@@ -43,17 +43,15 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
     }
 
     @Override
-    public void getAllUsers(final List<User> usersList, final BaseAdapter listAdapter) {
+    public void getAllUsers() {
 
         firebaseDatabase.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                usersList.clear();
                 for(DataSnapshot data:dataSnapshot.getChildren()){
                     User user = data.getValue(User.class);
-                    usersList.add(user);
-                    listAdapter.notifyDataSetChanged();
+                    setChanged();
+                    notifyObservers(user);
                 }
             }
 
@@ -64,15 +62,14 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
         });
     }
     @Override
-    public void getUsersByTheirName(final List<User> usersList, final BaseAdapter adapter, String name) {
+    public void getUsersByTheirName(String name) {
         firebaseDatabase.child("user").orderByChild("name").equalTo(name).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                usersList.clear();
                 for(DataSnapshot data:dataSnapshot.getChildren()){
                     User user = data.getValue(User.class);
-                    usersList.add(user);
-                    adapter.notifyDataSetChanged();
+                    setChanged();
+                    notifyObservers(user);
                 }
             }
 
@@ -115,4 +112,5 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
         user.setCode(firebaseDatabase.child("user").push().getKey());
         return firebaseDatabase.child("user").child(user.getCode()).setValue(user).getException();
     }
+
 }

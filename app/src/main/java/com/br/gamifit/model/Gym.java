@@ -9,6 +9,7 @@ import java.util.List;
 public class Gym {
     private String name;
     private String code;
+
     private List<Profile> usersProfile;
 
     public Gym(){

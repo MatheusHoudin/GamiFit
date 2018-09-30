@@ -28,7 +28,7 @@ public class ProfileFragmentController implements Observer{
         this.setProfileListFragment(profileListFragment);
 
         profileList = new ArrayList<>();
-        profileListAdapter = new ProfileListAdapter(getContext(),profileList);
+        profileListAdapter = new ProfileListAdapter(profileListFragment.getContext(),profileList);
     }
 
     public static ProfileFragmentController getProfileFragmentController(ProfileListFragment profileListFragment) {

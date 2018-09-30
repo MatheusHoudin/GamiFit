@@ -35,7 +35,6 @@ public class ProfileListFragment extends Fragment {
 
     public ProfileListFragment(){
         profileFragmentController = ProfileFragmentController.getProfileFragmentController(this);
-
     }
 
     @Override

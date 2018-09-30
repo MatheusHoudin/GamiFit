@@ -14,11 +14,11 @@ import com.br.gamifit.model.User;
 
 import java.util.List;
 
-public class GymInviteListAdapter extends BaseAdapter {
+public class UserListAdapter extends BaseAdapter {
     private List<User> users;
     private Context context;
 
-    public GymInviteListAdapter(Context context, List<User> users){
+    public UserListAdapter(Context context, List<User> users){
         this.context = context;
         this.users = users;
     }

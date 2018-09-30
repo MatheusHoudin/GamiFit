@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.GymActivity" />
-        <activity
-            android:name=".activity.InviteActivity"
-            android:label="@string/title_activity_gym" />
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -14,8 +14,8 @@ public interface IUserDAO {
 
     Exception createUserAcount(User user);
     Exception saveUser(User user);
-    void getAllUsers(List<User> usersList, BaseAdapter listAdapter);
+    void getAllUsers();
     void getUser(String email);
-    void getUsersByTheirName(List<User> usersList,BaseAdapter adapter,String name);
+    void getUsersByTheirName(String name);
 
 }

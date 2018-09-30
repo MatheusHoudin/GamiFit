@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.br.gamifit.R;
-import com.br.gamifit.adapter.GymInviteListAdapter;
+import com.br.gamifit.adapter.UserListAdapter;
 import com.br.gamifit.controller.SocialFragmentController;
 import com.br.gamifit.model.User;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
@@ -22,6 +22,7 @@ import java.util.List;
 public class UsersSocialFragment extends android.support.v4.app.Fragment {
 
     private List<User> users;
+    private UserListAdapter inviteListAdapter;
     private SocialFragmentController controller;
 
 
@@ -29,7 +30,8 @@ public class UsersSocialFragment extends android.support.v4.app.Fragment {
 
     public UsersSocialFragment(){
         users = new ArrayList<>();
-        controller = SocialFragmentController.getInstance(getContext());
+        inviteListAdapter = new UserListAdapter(getContext(), users);
+        controller = SocialFragmentController.getInstance(this);
     }
 
     @Override
@@ -42,6 +44,7 @@ public class UsersSocialFragment extends android.support.v4.app.Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.users_social_fragment_menu,menu);
         MenuItem menuItem = menu.findItem(R.id.social_ic_search);
+        menuItem.setVisible(false);
         materialSearchView.setMenuItem(menuItem);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -52,10 +55,9 @@ public class UsersSocialFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.users_social_fragment,container,false);
         ListView listView = view.findViewById(R.id.social_list_view);
 
-        GymInviteListAdapter inviteListAdapter = new GymInviteListAdapter(getContext(), users);
         listView.setAdapter(inviteListAdapter);
 
-        controller.getAllUsersToInvite(users, inviteListAdapter);
+        controller.getAllUsersToInvite();
 
         materialSearchView = view.findViewById(R.id.search_view);
         return view;

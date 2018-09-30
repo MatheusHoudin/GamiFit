@@ -2,6 +2,7 @@ package com.br.gamifit.model;
 
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.InviteFirebaseDAO;
+import com.br.gamifit.database.UserFirebaseDAO;
 import com.br.gamifit.database.dao_interface.IUserDAO;
 import com.google.firebase.database.Exclude;
 
@@ -47,13 +48,6 @@ public class User extends Observable {
         Exception caughtException = userDAO.saveUser(this);
         notifyObservers(caughtException);
         return caughtException;
-    }
-
-    public boolean sendInviteToJoin(Gym gym){
-        GymInvite generatedInvite = createInviteToJoin(gym);
-        InviteFirebaseDAO inviteFirebaseDAO = FirebaseFactory.getInviteFirebaseDAO();
-
-        return inviteFirebaseDAO.createInvite(generatedInvite);
     }
 
     public String getName() {

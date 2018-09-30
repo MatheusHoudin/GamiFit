@@ -4,6 +4,10 @@ import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.InviteFirebaseDAO;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnit;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

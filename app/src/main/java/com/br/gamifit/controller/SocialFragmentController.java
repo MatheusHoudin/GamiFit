@@ -5,6 +5,7 @@ import android.widget.BaseAdapter;
 
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.UserFirebaseDAO;
+import com.br.gamifit.fragment.UsersSocialFragment;
 import com.br.gamifit.model.Gym;
 import com.br.gamifit.model.User;
 
@@ -14,27 +15,36 @@ import java.util.Observer;
 
 public class SocialFragmentController implements Observer {
     private Context context;
-    private static SocialFragmentController controller;
+    private UsersSocialFragment usersSocialFragment;
+    private static SocialFragmentController socialFragmentController;
 
 
-    private SocialFragmentController(Context context){
-        this.setContext(context);
+    private SocialFragmentController(UsersSocialFragment usersSocialFragment){
+        this.setUsersSocialFragment(usersSocialFragment);
+        this.setContext(usersSocialFragment.getContext());
     }
 
-    public static SocialFragmentController getInstance(Context context){
-        if(controller==null){
-            controller = new SocialFragmentController(context);
+    public static SocialFragmentController getInstance(UsersSocialFragment usersSocialFragment){
+        if(socialFragmentController==null){
+            socialFragmentController = new SocialFragmentController(usersSocialFragment);
+            setUpObservable();
         }
-        return controller;
+
+        return socialFragmentController;
+    }
+
+    private static void setUpObservable(){
+        UserFirebaseDAO ufDAO = FirebaseFactory.getUserFirebaseDAO();
+        ufDAO.addObserver(socialFragmentController);
     }
 
     public void sendInvite(User user){
 
     }
 
-    public void getAllUsersToInvite(List<User> usersList, BaseAdapter listAdapter){
+    public void getAllUsersToInvite(){
         UserFirebaseDAO ufDAO = FirebaseFactory.getUserFirebaseDAO();
-        ufDAO.getAllUsers(usersList,listAdapter);
+        ufDAO.getAllUsers();
     }
 
     public User getLoggedUser(){
@@ -51,8 +61,19 @@ public class SocialFragmentController implements Observer {
         this.context = context;
     }
 
+    public UsersSocialFragment getUsersSocialFragment() {
+        return usersSocialFragment;
+    }
+
+    public void setUsersSocialFragment(UsersSocialFragment usersSocialFragment) {
+        this.usersSocialFragment = usersSocialFragment;
+    }
+
     @Override
     public void update(Observable observable, Object o) {
+        if(o instanceof User){
+            User user = (User) o;
 
+        }
     }
 }
