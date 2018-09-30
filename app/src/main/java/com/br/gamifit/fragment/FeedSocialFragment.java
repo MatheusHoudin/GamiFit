@@ -25,7 +25,7 @@ public class FeedSocialFragment extends Fragment {
 
     public FeedSocialFragment() {
         Gym gym = new Gym("Arena Fitness","f9r4fn4o4");
-        controller = SocialFragmentController.getInstance(getContext());
+        //controller = SocialFragmentController.getInstance(this);
         users = new ArrayList<>();
 
     }

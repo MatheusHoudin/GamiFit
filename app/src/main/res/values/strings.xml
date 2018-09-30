@@ -56,5 +56,6 @@
 
     <string name="follow_user">Seguir</string>
     <string name="title_activity_gym_profile">GymProfileActivity</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
