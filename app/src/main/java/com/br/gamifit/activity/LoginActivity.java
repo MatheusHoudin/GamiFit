@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity{
         txtPassword = findViewById(R.id.txt_password);
 
         LoginController loginController = LoginController.getLoginController(this);
+
     }
 
     public void setBtnLoginOnClickListener(View.OnClickListener onClickListener){
@@ -53,6 +54,7 @@ public class LoginActivity extends AppCompatActivity{
     public void openDashboardActivity(){
         Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public EditText getTxtEmail() {

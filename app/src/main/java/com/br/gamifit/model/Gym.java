@@ -1,6 +1,7 @@
 package com.br.gamifit.model;
 
 import com.br.gamifit.dao_factory.FirebaseFactory;
+import com.br.gamifit.database.GymFirebaseDAO;
 import com.br.gamifit.database.InviteFirebaseDAO;
 
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.List;
 public class Gym {
     private String name;
     private String code;
+    private long latitude;
+    private long longitude;
 
     private List<Profile> usersProfile;
 
@@ -22,12 +25,23 @@ public class Gym {
         this.setCode(code);
     }
 
+    public Gym(String name,String code,long latitude,long longitude){
+        this(name,code);
+        this.setLatitude(latitude);
+        this.setLongitude(longitude);
+    }
+
     public GymInvite createInviteToJoin(User user){
         GymInvite invite = new GymInvite();
         invite.setUser(user);
         invite.setGym(this);
 
         return invite;
+    }
+
+    public Exception saveGym(){
+        GymFirebaseDAO gymDAO = FirebaseFactory.getGymFirebaseDAO();
+        return gymDAO.createGym(this);
     }
 
     public boolean sendInviteToJoin(User userToInvitate){
@@ -59,6 +73,22 @@ public class Gym {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public long getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(long latitude) {
+        this.latitude = latitude;
+    }
+
+    public long getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(long longitude) {
+        this.longitude = longitude;
     }
 
     @Override

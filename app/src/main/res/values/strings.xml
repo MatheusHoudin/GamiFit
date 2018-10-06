@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">GamiFit</string>
+    <string name="btn_create_gym">Criar academia</string>
+    <string name="select_gym_location">Selecionar Localização</string>
     <string name="btn_convidar">Convidar</string>
     <string name="user_img">User image profile</string>
     <string name="title_activity_login">Sign in</string>
@@ -16,6 +18,12 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="selected_location">Localização selecionada</string>
+    <string name="map_instructions_alert_dialog_title">Instruções</string>
+    <string name="map_instructions_alert_dialog_message">Toque no local do mapa em que sua academia está localizada</string>
+    <string name="marker_alert_dialog_title">Este é o local exato de sua academia?</string>
+    <string name="option_get_place">Get place</string>
     <string name="title_activity_gym">GymActivity</string>
     <string name="title_trainings">Treinamento</string>
     <string name="title_social">Social</string>
@@ -57,5 +65,7 @@
     <string name="follow_user">Seguir</string>
     <string name="title_activity_gym_profile">GymProfileActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="txt_latitude">Latitude</string>
+    <string name="txt_longitude">Longitude</string>
 
 </resources>

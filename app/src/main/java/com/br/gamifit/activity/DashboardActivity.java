@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,10 +26,12 @@ public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DashboardController dashboardController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -47,12 +50,44 @@ public class DashboardActivity extends AppCompatActivity
 
         dashboardController = DashboardController.getDashboardController(this);
         FloatingActionButton fab = findViewById(R.id.fab_create_gym);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dashboardController.openCreateGymActivity();
-            }
-        });
+        Log.i("OnCreate","OnCreate");
+        fab.setOnClickListener(dashboardController.getFloatingButtonOnClickListener());
+    }
+
+    @Override
+    protected void onPause() {
+        Log.i("test","OnPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.i("test","OnResume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.i("test","OnRestart");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStart() {
+        Log.i("test","OnStart");
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.i("test","OnStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.i("test","OnDestroy");
+        super.onDestroy();
     }
 
     @Override
@@ -69,7 +104,6 @@ public class DashboardActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.dashboard, menu);
-
         return true;
     }
 
@@ -87,7 +121,6 @@ public class DashboardActivity extends AppCompatActivity
         }else if(id == R.id.action_invites){
             dashboardController.openInvitesActivity();
         }
-
         return super.onOptionsItemSelected(item);
     }
 

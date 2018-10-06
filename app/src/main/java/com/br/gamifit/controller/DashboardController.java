@@ -44,4 +44,7 @@ public class DashboardController {
         }
     };
 
+    public View.OnClickListener getFloatingButtonOnClickListener() {
+        return floatingButtonOnClickListener;
+    }
 }
