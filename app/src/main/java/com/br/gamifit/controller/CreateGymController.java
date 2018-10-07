@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.br.gamifit.activity.CreateGymActivity;
 import com.br.gamifit.helper.MyPreferences;
 import com.br.gamifit.model.Gym;
+import com.br.gamifit.model.Localization;
 import com.br.gamifit.model.User;
 import com.br.gamifit.model.exception.InvalidGymDataException;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -54,8 +55,13 @@ public class CreateGymController {
 
     private boolean verifyHasAllDataToMakeTheGym(){
         String gymName = createGymActivity.getGymName().getText().toString();
+        double latitude = gymPlace.getLatLng().latitude;
+        double longitude = gymPlace.getLatLng().longitude;
+        String address = gymPlace.getAddress().toString();
+
+        Localization localization = new Localization(latitude,longitude,address);
         try{
-            this.gym = new Gym(gymName,gymPlace);
+            this.gym = new Gym(gymName,localization);
         }catch(InvalidGymDataException e){
             Toast.makeText(createGymActivity.getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
             return false;

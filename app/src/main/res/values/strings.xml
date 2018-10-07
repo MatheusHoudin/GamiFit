@@ -50,6 +50,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configurações</string>
+    <string name="action_qrcode_gym">Convidar</string>
 
     <string name="action_search">Procurar</string>
 
@@ -57,6 +58,7 @@
     <string name="users">Usuários</string>
     <string name="action_invite">Convites</string>
     <string name="notifications_activity">Convites</string>
+    <string name="my_gym_activity">Minhas Academias</string>
     <string name="create_gym_activity">Cadastrar Academia</string>
 
     <string name="accept">Aceitar</string>

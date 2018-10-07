@@ -2,6 +2,7 @@ package com.br.gamifit.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,10 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsersSocialFragment extends android.support.v4.app.Fragment {
-
     private SocialFragmentController controller;
-
-
     private MaterialSearchView materialSearchView;
 
     public UsersSocialFragment(){
@@ -52,6 +50,7 @@ public class UsersSocialFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.users_social_fragment,container,false);
 
         RecyclerView recyclerView = view.findViewById(R.id.social_list_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(controller.getInviteListAdapter());
 
         materialSearchView = view.findViewById(R.id.search_view);

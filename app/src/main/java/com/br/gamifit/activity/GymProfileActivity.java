@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.br.gamifit.R;
+import com.br.gamifit.model.Profile;
 
 public class GymProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,9 +49,9 @@ public class GymProfileActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        Profile profile = (Profile)bundle.getSerializable("profile");
 
-        Log.i("Academia",bundle.getString("GymName"));
-        Toast.makeText(getApplicationContext(),bundle.getString("GymName"),Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),profile.getGym().getName(),Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class GymProfileActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.gym_profile, menu);
+        getMenuInflater().inflate(R.menu.my_gym_profile, menu);
         return true;
     }
 
@@ -81,6 +81,8 @@ public class GymProfileActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if( id == R.id.action_qrcode_gym){
+
         }
 
         return super.onOptionsItemSelected(item);

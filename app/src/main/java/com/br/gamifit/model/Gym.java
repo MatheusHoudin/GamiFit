@@ -6,13 +6,14 @@ import com.br.gamifit.database.InviteFirebaseDAO;
 import com.br.gamifit.model.exception.InvalidGymDataException;
 import com.google.android.gms.location.places.Place;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gym {
+public class Gym implements Serializable{
     private String code;
     private String name;
-    private Place place;
+    private Localization localization;
     private User gymOwner;
 
     private List<Profile> usersProfile;
@@ -27,15 +28,15 @@ public class Gym {
         this.setCode(code);
     }
 
-    public Gym(String name,String code,Place place){
+    public Gym(String name,String code,Localization localization){
         this(name,code);
-        this.setPlace(place);
+        this.setLocalization(localization);
     }
 
-    public Gym(String name,Place place)throws InvalidGymDataException{
+    public Gym(String name,Localization localization)throws InvalidGymDataException{
         this();
         this.setName(name);
-        this.setPlace(place);
+        this.setLocalization(localization);
     }
 
     public GymInvite createInviteToJoin(User user){
@@ -85,16 +86,16 @@ public class Gym {
         this.code = code;
     }
 
-    public void setPlace(Place place) throws InvalidGymDataException {
-        if(place!=null){
-            this.place = place;
+    public void setLocalization(Localization localization) throws InvalidGymDataException {
+        if(localization!=null){
+            this.localization = localization;
         }else{
-            throw new InvalidGymDataException("Localização fornecida é inválida",place);
+            throw new InvalidGymDataException("Localização fornecida é inválida",localization);
         }
     }
 
-    public Place getPlace() {
-        return place;
+    public Localization getLocalization() {
+        return localization;
     }
 
     @Override

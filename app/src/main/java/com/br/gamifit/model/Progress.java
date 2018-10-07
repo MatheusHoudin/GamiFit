@@ -1,6 +1,8 @@
 package com.br.gamifit.model;
 
-public class Progress {
+import java.io.Serializable;
+
+public class Progress implements Serializable{
     private int offensiveDays;
 
     public Progress(){}

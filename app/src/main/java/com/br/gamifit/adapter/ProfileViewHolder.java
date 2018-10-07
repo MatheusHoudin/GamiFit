@@ -13,33 +13,18 @@ import android.widget.Toast;
 import com.br.gamifit.R;
 import com.br.gamifit.activity.GymProfileActivity;
 
-public class ProfileViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class ProfileViewHolder extends RecyclerView.ViewHolder{
     private ImageView gymImage;
     private TextView gymName;
     private TextView offensiveDays;
 
-    private Context context;
-
-    public ProfileViewHolder(View itemView, Context context) {
+    public ProfileViewHolder(View itemView) {
         super(itemView);
-        this.context = context;
         gymImage = itemView.findViewById(R.id.gym_image);
         gymName = itemView.findViewById(R.id.gym_name);
-        Log.i("teste",gymName.getText().toString());
         offensiveDays = itemView.findViewById(R.id.offensive_days);
-        itemView.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View view) {
-        Toast.makeText(context,"Clicked Gym: "+this.gymName.getText().toString(),Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(context, GymProfileActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("GymName",this.gymName.getText().toString());
-        intent.putExtras(bundle);
-
-        context.startActivity(intent);
-    }
 
     public ImageView getGymImage() {
         return gymImage;
@@ -51,9 +36,5 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder implements View.O
 
     public TextView getOffensiveDays() {
         return offensiveDays;
-    }
-
-    public Context getContext() {
-        return context;
     }
 }

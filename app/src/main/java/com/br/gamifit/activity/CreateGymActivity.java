@@ -60,7 +60,7 @@ public class CreateGymActivity extends AppCompatActivity {
             if(resultCode == RESULT_OK){
                 Place place = PlacePicker.getPlace(this,data);
                 createGymController.setGymPlace(place);
-                gymAddress.setText(place.getName());
+                gymAddress.setText(place.getAddress());
             }
         }
     }

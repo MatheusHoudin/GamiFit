@@ -6,9 +6,10 @@ import com.br.gamifit.database.UserFirebaseDAO;
 import com.br.gamifit.database.dao_interface.IUserDAO;
 import com.google.firebase.database.Exclude;
 
+import java.io.Serializable;
 import java.util.Observable;
 
-public class User extends Observable {
+public class User extends Observable implements Serializable{
     private String name;
     private String email;
     private String password;

@@ -1,6 +1,7 @@
 package com.br.gamifit.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,6 +35,11 @@ public class ProfileListFragment extends Fragment {
 
 
     public ProfileListFragment(){
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
         profileFragmentController = ProfileFragmentController.getProfileFragmentController(this);
     }
 
@@ -53,9 +59,8 @@ public class ProfileListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         RecyclerView profilesListView = v.findViewById(R.id.profile_list);
-        //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        RecyclerView.LayoutManager a = new GridLayoutManager(getContext(),2);
-        profilesListView.setLayoutManager(a);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        profilesListView.setLayoutManager(linearLayoutManager);
         profilesListView.setAdapter(profileFragmentController.getProfileListAdapter());
         return v;
     }

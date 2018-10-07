@@ -3,7 +3,9 @@ package com.br.gamifit.model;
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.ProfileFirebaseDAO;
 
-public class Profile {
+import java.io.Serializable;
+
+public class Profile implements Serializable{
     private User user;
     private Gym gym;
     private Progress progress;

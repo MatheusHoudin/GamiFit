@@ -2,13 +2,12 @@ package com.br.gamifit.controller;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.br.gamifit.activity.CreateGymActivity;
 import com.br.gamifit.activity.DashboardActivity;
 import com.br.gamifit.activity.InvitationActivity;
-import com.br.gamifit.activity.MyGymActivity;
+import com.br.gamifit.activity.MyGymListActivity;
 
 public class DashboardController {
     private DashboardActivity dashboardView;
@@ -34,7 +33,7 @@ public class DashboardController {
     }
 
     public void openMyGymAticity(){
-        Intent intent = new Intent(this.context, MyGymActivity.class);
+        Intent intent = new Intent(this.context, MyGymListActivity.class);
         dashboardView.startActivity(intent);
     }
 
