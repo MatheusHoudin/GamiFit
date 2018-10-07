@@ -1,6 +1,10 @@
 package com.br.gamifit.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,7 +18,7 @@ import com.br.gamifit.model.User;
 
 import java.util.List;
 
-public class UserListAdapter extends BaseAdapter {
+public class UserListAdapter extends RecyclerView.Adapter<UserViewHolder> {
     private List<User> users;
     private Context context;
 
@@ -23,39 +27,26 @@ public class UserListAdapter extends BaseAdapter {
         this.users = users;
     }
 
+    @NonNull
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View v = View.inflate(this.context, R.layout.user_item_list,null);
-        final TextView txtName = v.findViewById(R.id.user_name_list);
-        final int position = i;
-        Button btnSendInvite = v.findViewById(R.id.btn_invite);
-        txtName.setText(users.get(i).getName());
-
-        btnSendInvite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context,txtName.getText().toString(),Toast.LENGTH_SHORT).show();
-
-                Gym gym = new Gym("Arena Fitness","h67886b86g68o");
-                gym.sendInviteToJoin(users.get(position));
-            }
-        });
-        return v;
+    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new UserViewHolder(LayoutInflater.from(parent.getContext()).
+                inflate(R.layout.user_item_list,parent,false),context);
     }
 
     @Override
-    public int getCount() {
-        return users.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return users.get(i);
+    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+        holder.getUserName().setText(users.get(position).getName());
     }
 
     @Override
     public long getItemId(int i) {
         return 0;
+    }
+
+    @Override
+    public int getItemCount() {
+        return users.size();
     }
 
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 
+import com.br.gamifit.model.User;
 import com.google.android.gms.flags.impl.SharedPreferencesFactory;
 
 import java.util.Map;
@@ -62,5 +63,14 @@ public class MyPreferences {
         editor.putString(USER_CODE_TAG,code);
         editor.putString(USER_PASSWORD_TAG,password);
         return editor.commit();
+    }
+
+    public User getUser(){
+        User user = new User();
+        user.setName(getUserName());
+        user.setCode(getUserCode());
+        user.setEmail(getUserEmail());
+
+        return user;
     }
 }

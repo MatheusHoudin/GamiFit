@@ -28,8 +28,6 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        controller = SignUpController.getSignUpController(this);
-
         txtName = findViewById(R.id.txt_name);
         txtEmail = findViewById(R.id.txt_email);
         txtPassword = findViewById(R.id.txt_password);
@@ -38,8 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp = findViewById(R.id.btn_create_account);
         txtSignIn = findViewById(R.id.txt_sign_in);
 
-
-
+        controller = SignUpController.getSignUpController(this);
     }
 
     public void setbtnSignUpOnClickListener(View.OnClickListener onClickListener){
@@ -49,6 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void openDashboardActivity(){
         Intent intent = new Intent(this,DashboardActivity.class);
         startActivity(intent);
+        this.finish();
     }
 
     public void openLoginActivity(){

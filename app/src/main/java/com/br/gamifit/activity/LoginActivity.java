@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity{
     public void openDashboardActivity(){
         Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
         startActivity(intent);
-        finish();
+        this.finish();
     }
 
     public EditText getTxtEmail() {

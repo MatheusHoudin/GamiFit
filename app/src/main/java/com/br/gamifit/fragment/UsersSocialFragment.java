@@ -2,6 +2,7 @@ package com.br.gamifit.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,16 +22,12 @@ import java.util.List;
 
 public class UsersSocialFragment extends android.support.v4.app.Fragment {
 
-    private List<User> users;
-    private UserListAdapter inviteListAdapter;
     private SocialFragmentController controller;
 
 
     private MaterialSearchView materialSearchView;
 
     public UsersSocialFragment(){
-        users = new ArrayList<>();
-        inviteListAdapter = new UserListAdapter(getContext(), users);
         controller = SocialFragmentController.getInstance(this);
     }
 
@@ -53,13 +50,17 @@ public class UsersSocialFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.users_social_fragment,container,false);
-        ListView listView = view.findViewById(R.id.social_list_view);
 
-        listView.setAdapter(inviteListAdapter);
-
-        controller.getAllUsersToInvite();
+        RecyclerView recyclerView = view.findViewById(R.id.social_list_view);
+        recyclerView.setAdapter(controller.getInviteListAdapter());
 
         materialSearchView = view.findViewById(R.id.search_view);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        controller.getAllUsersToInvite();
     }
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import com.br.gamifit.activity.CreateGymActivity;
 import com.br.gamifit.activity.DashboardActivity;
 import com.br.gamifit.activity.InvitationActivity;
+import com.br.gamifit.activity.MyGymActivity;
 
 public class DashboardController {
     private DashboardActivity dashboardView;
@@ -16,8 +17,8 @@ public class DashboardController {
     private static DashboardController dashboardController;
 
     public DashboardController(DashboardActivity activity){
-        dashboardView = activity;
-        this.context = activity.getApplicationContext();
+        this.dashboardView = activity;
+        this.context = this.dashboardView.getApplicationContext();
     }
 
     public static DashboardController getDashboardController(DashboardActivity activity) {
@@ -28,12 +29,17 @@ public class DashboardController {
     }
 
     public void openInvitesActivity(){
-        Intent intent = new Intent(dashboardView, InvitationActivity.class);
+        Intent intent = new Intent(this.context, InvitationActivity.class);
+        dashboardView.startActivity(intent);
+    }
+
+    public void openMyGymAticity(){
+        Intent intent = new Intent(this.context, MyGymActivity.class);
         dashboardView.startActivity(intent);
     }
 
     public void openCreateGymActivity(){
-        Intent intent = new Intent(dashboardView, CreateGymActivity.class);
+        Intent intent = new Intent(this.context, CreateGymActivity.class);
         dashboardView.startActivity(intent);
     }
 

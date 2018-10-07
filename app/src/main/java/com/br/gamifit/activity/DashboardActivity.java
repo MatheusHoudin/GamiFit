@@ -1,13 +1,10 @@
 package com.br.gamifit.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,14 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.br.gamifit.R;
 import com.br.gamifit.adapter.ProfilePageAdapter;
 import com.br.gamifit.controller.DashboardController;
 
-public class DashboardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DashboardController dashboardController;
 
@@ -50,45 +45,9 @@ public class DashboardActivity extends AppCompatActivity
 
         dashboardController = DashboardController.getDashboardController(this);
         FloatingActionButton fab = findViewById(R.id.fab_create_gym);
-        Log.i("OnCreate","OnCreate");
         fab.setOnClickListener(dashboardController.getFloatingButtonOnClickListener());
     }
 
-    @Override
-    protected void onPause() {
-        Log.i("test","OnPause");
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        Log.i("test","OnResume");
-        super.onResume();
-    }
-
-    @Override
-    protected void onRestart() {
-        Log.i("test","OnRestart");
-        super.onRestart();
-    }
-
-    @Override
-    protected void onStart() {
-        Log.i("test","OnStart");
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        Log.i("test","OnStop");
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.i("test","OnDestroy");
-        super.onDestroy();
-    }
 
     @Override
     public void onBackPressed() {
@@ -120,6 +79,8 @@ public class DashboardActivity extends AppCompatActivity
             return true;
         }else if(id == R.id.action_invites){
             dashboardController.openInvitesActivity();
+        }else if(id == R.id.action_my_gyms){
+            dashboardController.openMyGymAticity();
         }
         return super.onOptionsItemSelected(item);
     }

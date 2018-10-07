@@ -3,15 +3,17 @@ package com.br.gamifit.model;
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.GymFirebaseDAO;
 import com.br.gamifit.database.InviteFirebaseDAO;
+import com.br.gamifit.model.exception.InvalidGymDataException;
+import com.google.android.gms.location.places.Place;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Gym {
-    private String name;
     private String code;
-    private long latitude;
-    private long longitude;
+    private String name;
+    private Place place;
+    private User gymOwner;
 
     private List<Profile> usersProfile;
 
@@ -25,17 +27,21 @@ public class Gym {
         this.setCode(code);
     }
 
-    public Gym(String name,String code,long latitude,long longitude){
+    public Gym(String name,String code,Place place){
         this(name,code);
-        this.setLatitude(latitude);
-        this.setLongitude(longitude);
+        this.setPlace(place);
+    }
+
+    public Gym(String name,Place place)throws InvalidGymDataException{
+        this();
+        this.setName(name);
+        this.setPlace(place);
     }
 
     public GymInvite createInviteToJoin(User user){
         GymInvite invite = new GymInvite();
         invite.setUser(user);
         invite.setGym(this);
-
         return invite;
     }
 
@@ -63,8 +69,12 @@ public class Gym {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name) throws InvalidGymDataException{
+        if(name!=null && !name.isEmpty()){
+            this.name = name;
+        }else{
+            throw new InvalidGymDataException("Nome da academia é inválido",name);
+        }
     }
 
     public String getCode() {
@@ -75,20 +85,16 @@ public class Gym {
         this.code = code;
     }
 
-    public long getLatitude() {
-        return latitude;
+    public void setPlace(Place place) throws InvalidGymDataException {
+        if(place!=null){
+            this.place = place;
+        }else{
+            throw new InvalidGymDataException("Localização fornecida é inválida",place);
+        }
     }
 
-    public void setLatitude(long latitude) {
-        this.latitude = latitude;
-    }
-
-    public long getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(long longitude) {
-        this.longitude = longitude;
+    public Place getPlace() {
+        return place;
     }
 
     @Override
@@ -104,5 +110,13 @@ public class Gym {
     @Override
     public int hashCode() {
         return code.hashCode();
+    }
+
+    public User getGymOwner() {
+        return gymOwner;
+    }
+
+    public void setGymOwner(User gymOwner) {
+        this.gymOwner = gymOwner;
     }
 }

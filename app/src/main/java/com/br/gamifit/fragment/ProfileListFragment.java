@@ -48,13 +48,12 @@ public class ProfileListFragment extends Fragment {
         profileFragmentController.getAllMyProfiles();
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         RecyclerView profilesListView = v.findViewById(R.id.profile_list);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         RecyclerView.LayoutManager a = new GridLayoutManager(getContext(),2);
         profilesListView.setLayoutManager(a);
         profilesListView.setAdapter(profileFragmentController.getProfileListAdapter());

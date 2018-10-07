@@ -29,7 +29,7 @@ public class ProfileViewHolder extends RecyclerView.ViewHolder implements View.O
         offensiveDays = itemView.findViewById(R.id.offensive_days);
         itemView.setOnClickListener(this);
     }
-    //TODO:Fix the bug here when you try to access the text on the gymName Component
+
     @Override
     public void onClick(View view) {
         Toast.makeText(context,"Clicked Gym: "+this.gymName.getText().toString(),Toast.LENGTH_SHORT).show();

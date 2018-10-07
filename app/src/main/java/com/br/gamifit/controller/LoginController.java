@@ -39,7 +39,8 @@ public class LoginController implements Observer{
         this.context = loginView.getApplicationContext();
         this.loginView.setBtnLoginOnClickListener(btnLoginOnClickListener);
         this.loginView.setBtnCreateAcountOnClickListener(btnSignUpOnClickListener);
-        this.checkUserAlreadyLoggedIn();
+        FirebaseAuth.getInstance().signOut();
+        //this.checkUserAlreadyLoggedIn();
     }
 
     public static LoginController getLoginController(LoginActivity loginActivity) {
@@ -141,6 +142,7 @@ public class LoginController implements Observer{
     private void handleResultLogin(boolean commitResult){
         if(commitResult){
             loginView.openDashboardActivity();
+
         }else{
             Toast.makeText(context,"Não foi possivel realizar login",Toast.LENGTH_SHORT).show();
         }

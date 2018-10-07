@@ -11,4 +11,10 @@
         android:title="@string/action_invite"
         android:icon="@drawable/ic_notifications_black_24dp"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_my_gyms"
+        android:title="@string/action_my_gyms"
+        android:icon="@drawable/ic_fitness_center"
+        app:showAsAction="always"/>
 </menu>
