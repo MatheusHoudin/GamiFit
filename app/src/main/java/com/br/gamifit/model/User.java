@@ -1,10 +1,21 @@
 package com.br.gamifit.model;
 
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
+
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.InviteFirebaseDAO;
 import com.br.gamifit.database.UserFirebaseDAO;
 import com.br.gamifit.database.dao_interface.IUserDAO;
 import com.google.firebase.database.Exclude;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.encoder.ByteMatrix;
+import com.google.zxing.qrcode.encoder.QRCode;
 
 import java.io.Serializable;
 import java.util.Observable;
@@ -28,6 +39,26 @@ public class User extends Observable implements Serializable{
         this.setCode(code);
         this.setEmail(email);
         this.setPassword(password);
+    }
+
+    public Bitmap generateQRCode(){
+        QRCodeWriter writer = new QRCodeWriter();
+        try {
+            BitMatrix bitMatrix = writer.encode(this.code, BarcodeFormat.QR_CODE,600,600);
+            int height = bitMatrix.getHeight();
+            int width = bitMatrix.getWidth();
+            Bitmap bitmap = Bitmap.createBitmap(width,height,Bitmap.Config.RGB_565);
+            for(int x=0;x<width;x++){
+                for(int y=0;y<height;y++){
+                    bitmap.setPixel(x,y,bitMatrix.get(x,y)? Color.BLACK:Color.WHITE);
+                }
+            }
+            return bitmap;
+        } catch (WriterException e) {
+            Log.i("User-generateQRCode",e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public GymInvite createInviteToJoin(Gym gym){

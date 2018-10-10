@@ -2,12 +2,15 @@ package com.br.gamifit.controller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.View;
 
 import com.br.gamifit.activity.CreateGymActivity;
 import com.br.gamifit.activity.DashboardActivity;
 import com.br.gamifit.activity.InvitationActivity;
 import com.br.gamifit.activity.MyGymListActivity;
+import com.br.gamifit.helper.MyPreferences;
+import com.br.gamifit.model.User;
 
 public class DashboardController {
     private DashboardActivity dashboardView;
@@ -25,6 +28,11 @@ public class DashboardController {
             dashboardController = new DashboardController(activity);
         }
         return dashboardController;
+    }
+
+    public Bitmap getUserBitmapBasedOnHisCode(){
+        User user = MyPreferences.getMyPreferences(context).getUser();
+        return user.generateQRCode();
     }
 
     public void openInvitesActivity(){

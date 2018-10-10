@@ -1,6 +1,7 @@
 package com.br.gamifit.controller;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.BaseAdapter;
 
 import com.br.gamifit.adapter.UserListAdapter;
@@ -49,6 +50,7 @@ public class SocialFragmentController implements Observer {
     }
 
     public void getAllUsersToInvite(){
+        users.clear();
         UserFirebaseDAO ufDAO = FirebaseFactory.getUserFirebaseDAO();
         ufDAO.getAllUsers();
     }
@@ -81,10 +83,18 @@ public class SocialFragmentController implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        if(o instanceof User){
-            User user = (User) o;
-            users.add(user);
-            inviteListAdapter.notifyDataSetChanged();
+        if(observable instanceof UserFirebaseDAO){
+            if(o instanceof User){
+                Log.i("tata","adding");
+                User user = (User) o;
+                users.add(user);
+            }else if(o instanceof Integer){
+                Log.i("tata","mee");
+                if(((Integer) o).intValue()==UserFirebaseDAO.OPERATION_DONE_SUCESSFULLY.intValue()){
+                    Log.i("tata","done");
+                    inviteListAdapter.notifyDataSetChanged();
+                }
+            }
         }
     }
 }

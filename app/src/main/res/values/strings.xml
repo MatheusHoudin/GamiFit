@@ -51,6 +51,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configurações</string>
     <string name="action_qrcode_gym">Convidar</string>
+    <string name="action_checkin_checkout">Check in/Check out</string>
 
     <string name="action_search">Procurar</string>
 
@@ -61,8 +62,16 @@
     <string name="my_gym_activity">Minhas Academias</string>
     <string name="create_gym_activity">Cadastrar Academia</string>
 
+    <string name="qrcode_text">"Escaneie o código de um usuário"</string>
+    <string name="qrcode_invite_title">"Convidar usuário"</string>
+    <string name="qrcode_invite_message">"Enviar convite para este usuário?"</string>
     <string name="accept">Aceitar</string>
     <string name="reject">Rejeitar</string>
+    <string name="my_qrcode">Meu Código</string>
+    <string name="user_code">Código de usuário</string>
+    <string name="close">Fechar</string>
+    <string name="alert_dialog_yes">Sim</string>
+    <string name="alert_dialog_no">Não</string>
 
     <string name="follow_user">Seguir</string>
     <string name="title_activity_gym_profile">GymProfileActivity</string>
@@ -70,5 +79,6 @@
     <string name="txt_selected_place">Endereço</string>
 
     <string name="action_my_gyms">Minhas academias</string>
+    <string name="title_activity_my_gym">MyGymActivity</string>
 
 </resources>

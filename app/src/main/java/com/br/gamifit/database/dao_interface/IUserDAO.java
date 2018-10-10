@@ -16,6 +16,7 @@ public interface IUserDAO {
     Exception saveUser(User user);
     void getAllUsers();
     void getUser(String email);
+    void getScannedUser(String scannedUserCode);
     void getUsersByTheirName(String name);
 
 }

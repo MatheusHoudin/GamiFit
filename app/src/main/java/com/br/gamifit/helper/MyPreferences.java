@@ -40,7 +40,6 @@ public class MyPreferences {
         }
         return myPreferences;
     }
-
     public String getUserName(){
         return sharedPreferences.getString(USER_NAME_TAG,null);
     }

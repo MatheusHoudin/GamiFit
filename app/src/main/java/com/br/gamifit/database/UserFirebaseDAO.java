@@ -37,6 +37,8 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
     private DatabaseReference firebaseDatabase;
     private FirebaseAuth firebaseAuth;
 
+    public static final Integer OPERATION_DONE_SUCESSFULLY = 1;
+
     public UserFirebaseDAO(){
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -44,7 +46,6 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
 
     @Override
     public void getAllUsers() {
-
         firebaseDatabase.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -53,6 +54,7 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
                     setChanged();
                     notifyObservers(user);
                 }
+                notifyObservers(OPERATION_DONE_SUCESSFULLY);
             }
 
             @Override
@@ -98,6 +100,27 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    @Override
+    public void getScannedUser(String scannedUserCode) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("user").orderByChild("code").equalTo(scannedUserCode).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener(){
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChildren()){
+                    for(DataSnapshot data:dataSnapshot.getChildren()){
+                        User caughtUser = data.getValue(User.class);
+                        setChanged();
+                        notifyObservers(caughtUser);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }

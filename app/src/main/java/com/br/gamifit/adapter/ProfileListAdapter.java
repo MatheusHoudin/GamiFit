@@ -63,7 +63,6 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileViewHolder> 
             Bundle bundle = new Bundle();
             bundle.putSerializable("profile",profile);
             intent.putExtras(bundle);
-
             context.startActivity(intent);
         }
     }

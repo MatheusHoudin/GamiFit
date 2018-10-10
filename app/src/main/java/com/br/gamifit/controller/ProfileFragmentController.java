@@ -43,9 +43,9 @@ public class ProfileFragmentController implements Observer{
         FirebaseFactory.getProfileFirebaseDAO().addObserver(profileFragmentController);
     }
     public void getAllMyProfiles(){
+        profileList.clear();
         ProfileFirebaseDAO profileFirebaseDAO = FirebaseFactory.getProfileFirebaseDAO();
         String loggedUserCode = MyPreferences.getMyPreferences(context).getUserCode();
-        Log.i("Profile",loggedUserCode);
         profileFirebaseDAO.getAllMyProfiles(loggedUserCode);
     }
 

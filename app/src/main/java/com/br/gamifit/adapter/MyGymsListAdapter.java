@@ -62,6 +62,12 @@ public class MyGymsListAdapter extends RecyclerView.Adapter<GymViewHolder> {
             this.gym = gym;
             this.handler = handler;
         }
+
+        /**
+         * @param view
+         * When an Gym object view from the list is clicked a message containing the gym object which
+         * was clicked is sent to MyGymListActivity's Handler and there it performs an action
+         */
         @Override
         public void onClick(View view) {
             Bundle bundle = new Bundle();

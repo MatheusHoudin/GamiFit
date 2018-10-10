@@ -18,7 +18,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MyGymActivity" />
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,7 +60,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.CreateGymActivity"
-            android:parentActivityName=".activity.DashboardActivity"></activity>
+            android:parentActivityName=".activity.DashboardActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -74,7 +73,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".activity.MyGymListActivity"></activity>
+        <activity
+            android:name=".activity.MyGymListActivity"
+            android:parentActivityName=".activity.DashboardActivity" />
+        <activity
+            android:name=".activity.MyGymActivity"
+            android:label="@string/title_activity_my_gym"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

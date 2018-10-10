@@ -1,5 +1,8 @@
 package com.br.gamifit.controller;
 
+import android.os.Bundle;
+import android.util.Log;
+
 import com.br.gamifit.activity.MyGymListActivity;
 import com.br.gamifit.adapter.MyGymsListAdapter;
 import com.br.gamifit.dao_factory.FirebaseFactory;
@@ -47,14 +50,16 @@ public class MyGymListController implements Observer{
 
     public MyGymsListAdapter getMyGymsListAdapter() {
         return myGymsListAdapter;
-
     }
 
     @Override
     public void update(Observable observable, Object o) {
-        if(o instanceof Gym){
-            myGymsList.add((Gym) o);
-            myGymsListAdapter.notifyDataSetChanged();
+        if(observable instanceof GymFirebaseDAO){
+            if(o instanceof Gym){
+                myGymsList.add((Gym) o);
+                myGymsListAdapter.notifyDataSetChanged();
+            }
         }
+
     }
 }

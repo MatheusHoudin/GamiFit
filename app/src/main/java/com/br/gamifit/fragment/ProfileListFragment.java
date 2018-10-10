@@ -49,12 +49,6 @@ public class ProfileListFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        profileFragmentController.getAllMyProfiles();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
@@ -65,7 +59,9 @@ public class ProfileListFragment extends Fragment {
         return v;
     }
 
-
-
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        profileFragmentController.getAllMyProfiles();
+    }
 }

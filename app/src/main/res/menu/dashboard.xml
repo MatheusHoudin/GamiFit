@@ -17,4 +17,10 @@
         android:title="@string/action_my_gyms"
         android:icon="@drawable/ic_fitness_center"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_my_qrcode"
+        android:title="@string/my_qrcode"
+        android:icon="@drawable/ic_action_barcode_2"
+        app:showAsAction="ifRoom"/>
 </menu>

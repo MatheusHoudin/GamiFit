@@ -1,9 +1,12 @@
 package com.br.gamifit.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.br.gamifit.R;
 import com.br.gamifit.adapter.ProfilePageAdapter;
@@ -81,8 +86,23 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             dashboardController.openInvitesActivity();
         }else if(id == R.id.action_my_gyms){
             dashboardController.openMyGymAticity();
+        }else if(id == R.id.action_my_qrcode){
+            generateUserQRCodeAlertDialog();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void generateUserQRCodeAlertDialog(){
+        Bitmap userQRCodeBitmap = dashboardController.getUserBitmapBasedOnHisCode();
+        ImageView imageView = new ImageView(this);
+        imageView.setImageBitmap(userQRCodeBitmap);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.user_code);
+        builder.setView(imageView);
+        builder.setNeutralButton(R.string.close,null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,11 +17,14 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.br.gamifit.R;
+import com.br.gamifit.controller.GymProfileController;
 import com.br.gamifit.model.Profile;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class GymProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private GymProfileController gymProfileController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +51,12 @@ public class GymProfileActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        Bundle bundle = getIntent().getExtras();
         Profile profile = (Profile)bundle.getSerializable("profile");
+        this.setTitle(profile.getGym().getName());
 
-        Toast.makeText(getApplicationContext(),profile.getGym().getName(),Toast.LENGTH_LONG).show();
+        gymProfileController = GymProfileController.getGymProfileController(this,profile);
+
     }
 
     @Override
@@ -81,11 +86,24 @@ public class GymProfileActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }else if( id == R.id.action_qrcode_gym){
-
+        }else if( id == R.id.action_checkin_checkout){
+            gymProfileController.openScanCodeActivity();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            if(result.getContents() != null) {
+                String scannedUserCode = result.getContents();
+                gymProfileController.handleCheckInCheckOut(scannedUserCode);
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -111,5 +129,9 @@ public class GymProfileActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void showMessage(String message){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }

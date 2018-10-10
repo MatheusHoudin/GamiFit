@@ -90,7 +90,6 @@ public class LoginController implements Observer{
                 }catch (Exception e){
                     Toast.makeText(context,"Um erro de conexão aconteceu, por favor tente mais tarde",Toast.LENGTH_SHORT).show();
                 }
-
             }
         }
     };

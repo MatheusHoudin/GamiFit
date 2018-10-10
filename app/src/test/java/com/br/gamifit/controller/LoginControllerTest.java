@@ -30,11 +30,10 @@ public class LoginControllerTest {
     public void checkUserAlreadyLoggedInTest(){
         MockitoAnnotations.initMocks(this);
 
-
         when(auth.getCurrentUser()).thenReturn(user);
         when(FirebaseFactory.getUserFirebaseDAO()).thenReturn(dao);
 
-        LoginController controller = LoginController.getLoginController(null);
+        LoginController controller = LoginController.getLoginController(view);
 
         controller.checkUserAlreadyLoggedIn();
 

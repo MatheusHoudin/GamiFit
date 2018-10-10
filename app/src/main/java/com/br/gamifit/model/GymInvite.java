@@ -34,10 +34,6 @@ public class GymInvite{
         return inviteFirebaseDAO.delete(this);
     }
 
-    private boolean validateUserEqualsToCurrentOne(User user){
-        return this.user.equals(user);
-    }
-
     public String getCode() {
         return code;
     }
