@@ -37,13 +37,12 @@ public class GymProfileController {
     }
 
     public void handleCheckInCheckOut(String scannedUserCode){
-        MyPreferences myPreferences = MyPreferences.getMyPreferences(gymProfileActivity.getApplicationContext());
         boolean checkInOut = profile.isCheckInOut();
         if(!checkInOut){
             profile.setCheckInOut(true);
             gymProfileActivity.showMessage("Check in efetuado com sucesso");
         }else{
-            gymProfileActivity.showMessage("Check in efetuado com sucesso");
+            gymProfileActivity.showMessage("Check out efetuado com sucesso");
             profile.setCheckInOut(false);
             ProfileFirebaseDAO profileFirebaseDAO = FirebaseFactory.getProfileFirebaseDAO();
             profileFirebaseDAO.updateOffensiveDays(profile);

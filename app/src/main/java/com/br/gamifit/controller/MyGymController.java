@@ -59,6 +59,15 @@ public class MyGymController implements Observer{
         userFirebaseDAO.getScannedUser(scannedUserCode);
     }
 
+    private void createAndSendInviteToUser(User userToInvite){
+        boolean result = gym.sendInviteToJoin(userToInvite);
+        if(result){
+            myGymActivity.showToastMessage("Convite enviado com sucesso");
+        }else{
+            myGymActivity.showToastMessage("Convite não enviado com sucesso");
+        }
+    }
+
     @Override
     public void update(Observable observable, Object o) {
         if(o instanceof User){
@@ -66,15 +75,6 @@ public class MyGymController implements Observer{
                 User userToInvite = (User) o;
                 createAndSendInviteToUser(userToInvite);
             }
-        }
-    }
-
-    private void createAndSendInviteToUser(User userToInvite){
-        boolean result = gym.sendInviteToJoin(userToInvite);
-        if(result){
-            myGymActivity.showToastMessage("Convite enviado com sucesso");
-        }else{
-            myGymActivity.showToastMessage("Convite não enviado com sucesso");
         }
     }
 }

@@ -38,6 +38,8 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
     private FirebaseAuth firebaseAuth;
 
     public static final Integer OPERATION_DONE_SUCESSFULLY = 1;
+    public static final Integer OPERATION_CREATE_USER_ACCOUNT = 2;
+    public static final Integer OPERATION_SAVE_USER = 3;
 
     public UserFirebaseDAO(){
         firebaseDatabase = FirebaseDatabase.getInstance().getReference();
@@ -126,14 +128,30 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
     }
 
     @Override
-    public Exception createUserAcount(User user) {
-        return firebaseAuth.createUserWithEmailAndPassword(user.getEmail(),user.getPassword()).getException();
+    public void createUserAcount(final User user) {
+        firebaseAuth.createUserWithEmailAndPassword(user.getEmail(),user.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Exception exception = task.getException();
+                OperationResult operationResult = new OperationResult(exception,OPERATION_CREATE_USER_ACCOUNT);
+                saveUser(user);
+                notifyObservers(operationResult);
+            }
+        });
     }
 
     @Override
-    public Exception saveUser(User user) {
+    public void saveUser(User user) {
         user.setCode(firebaseDatabase.child("user").push().getKey());
-        return firebaseDatabase.child("user").child(user.getCode()).setValue(user).getException();
+        firebaseDatabase.child("user").child(user.getCode()).setValue(user).addOnCompleteListener(
+                new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Exception exception = task.getException();
+                OperationResult operationResult = new OperationResult(exception,OPERATION_SAVE_USER);
+                notifyObservers(operationResult);
+            }
+        });
     }
 
 }

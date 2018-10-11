@@ -68,18 +68,15 @@ public class User extends Observable implements Serializable{
         return  invite;
     }
 
-    public Exception createUserAccount(){
+    public void createUserAccount(){
+        Log.i("debugando","createUserAccount");
         IUserDAO userDAO = FirebaseFactory.getUserFirebaseDAO();
-        Exception caughtException = userDAO.createUserAcount(this);
-        notifyObservers(caughtException);
-        return  caughtException;
+        userDAO.createUserAcount(this);
     }
 
-    public Exception saveUser(){
+    public void saveUser(){
         IUserDAO userDAO = FirebaseFactory.getUserFirebaseDAO();
-        Exception caughtException = userDAO.saveUser(this);
-        notifyObservers(caughtException);
-        return caughtException;
+        userDAO.saveUser(this);
     }
 
     public String getName() {

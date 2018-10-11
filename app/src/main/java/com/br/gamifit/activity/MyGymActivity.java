@@ -54,9 +54,6 @@ public class MyGymActivity extends AppCompatActivity
 
         NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-//        GymPageAdapter gymPageAdapter = new GymPageAdapter(getSupportFragmentManager(),1);
-//        ViewPager viewPager = findViewById(R.id.my_gym_view_pager);
-//        viewPager.setAdapter(gymPageAdapter);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         Gym gym = (Gym) bundle.getSerializable("gym");

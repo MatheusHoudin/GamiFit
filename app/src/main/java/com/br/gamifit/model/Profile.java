@@ -85,6 +85,8 @@ public class Profile implements Serializable{
 
     public void setCheckInOut(boolean checkInOut) {
         this.checkInOut = checkInOut;
-        this.progress.setOffensiveDays(this.getProgress().getOffensiveDays()+1);
+        if(!checkInOut){
+            this.progress.setOffensiveDays(this.getProgress().getOffensiveDays()+1);
+        }
     }
 }

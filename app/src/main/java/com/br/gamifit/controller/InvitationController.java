@@ -39,7 +39,6 @@ public class InvitationController implements Observer {
             invitationController = new InvitationController(activity);
         }
         setUpObservable();
-        invitationController.findMyInvites();
         return invitationController;
     }
 

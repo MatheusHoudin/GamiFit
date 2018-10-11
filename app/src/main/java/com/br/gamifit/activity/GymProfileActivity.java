@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -99,6 +100,7 @@ public class GymProfileActivity extends AppCompatActivity
         if(result != null) {
             if(result.getContents() != null) {
                 String scannedUserCode = result.getContents();
+                Log.i("code",scannedUserCode);
                 gymProfileController.handleCheckInCheckOut(scannedUserCode);
             }
         } else {

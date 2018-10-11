@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:elevation="15dp"
-    app:cardCornerRadius="20dp"
+    app:cardBackgroundColor="@color/colorPrimaryLightTransparent"
+    app:cardCornerRadius="15dp"
     android:layout_margin="10dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/aaa"
         android:layout_width="match_parent"
-        android:layout_height="290dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/my_gym_image"

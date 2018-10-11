@@ -51,6 +51,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         dashboardController = DashboardController.getDashboardController(this);
         FloatingActionButton fab = findViewById(R.id.fab_create_gym);
         fab.setOnClickListener(dashboardController.getFloatingButtonOnClickListener());
+
     }
 
 

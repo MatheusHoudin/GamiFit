@@ -42,9 +42,9 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileViewHolder> 
     public void onBindViewHolder(@NonNull ProfileViewHolder holder, int position) {
 
         holder.getGymName().setText(profilesList.get(position).getGym().getName());
+        holder.getOffensiveDays().setText("Ofensiva: "+String.valueOf(profilesList.get(position).getProgress().getOffensiveDays())+" dias");
 
         holder.itemView.setOnClickListener(new HolderOnClickListener(profilesList.get(position)));
-       // holder.getOffensiveDays().setText(profilesList.get(position).getProgress().getOffensiveDays());
     }
 
     @Override

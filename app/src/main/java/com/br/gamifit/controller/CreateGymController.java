@@ -78,7 +78,8 @@ public class CreateGymController {
             gym.setGymOwner(user);
             Exception exception = gym.saveGym();
             if(exception==null){
-                Toast.makeText(createGymActivity.getApplicationContext(),"Deu ccerto",Toast.LENGTH_LONG).show();
+                Toast.makeText(createGymActivity.getApplicationContext(),"Academia cadastrada com sucesso",Toast.LENGTH_LONG).show();
+                createGymActivity.finish();
             }else{
                 Toast.makeText(createGymActivity.getApplicationContext(),"Não foi possível " +
                         "cadastrar esta academia",Toast.LENGTH_LONG).show();

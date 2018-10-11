@@ -54,6 +54,7 @@ public class MyGymListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        myGymListController.getMyGymsList().clear();
         myGymListController.getAllMyGyms();
     }
 

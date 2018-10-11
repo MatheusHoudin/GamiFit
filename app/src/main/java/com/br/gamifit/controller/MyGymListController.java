@@ -62,4 +62,8 @@ public class MyGymListController implements Observer{
         }
 
     }
+
+    public List<Gym> getMyGymsList() {
+        return myGymsList;
+    }
 }

@@ -12,8 +12,8 @@ import java.util.List;
 
 public interface IUserDAO {
 
-    Exception createUserAcount(User user);
-    Exception saveUser(User user);
+    void createUserAcount(User user);
+    void saveUser(User user);
     void getAllUsers();
     void getUser(String email);
     void getScannedUser(String scannedUserCode);

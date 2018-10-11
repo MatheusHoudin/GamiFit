@@ -13,7 +13,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Observable;
 
-public class GymFirebaseDAO extends Observable implements IGymDAO {
+public class
+GymFirebaseDAO extends Observable implements IGymDAO {
 
     public Exception createGym(Gym gym){
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
