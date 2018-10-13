@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.br.gamifit.R;
 import com.br.gamifit.activity.LoginActivity;
 import com.br.gamifit.activity.SignUpActivity;
 import com.br.gamifit.dao_factory.FirebaseFactory;
@@ -40,6 +41,7 @@ public class LoginController implements Observer{
         this.loginView.setBtnLoginOnClickListener(btnLoginOnClickListener);
         this.loginView.setBtnCreateAcountOnClickListener(btnSignUpOnClickListener);
         FirebaseAuth.getInstance().signOut();
+        //TODO: Check whether the user data is saved on MyPreferences or not when the method checckUserAlreadyLoggedIn() is called
         //this.checkUserAlreadyLoggedIn();
     }
 
@@ -78,17 +80,16 @@ public class LoginController implements Observer{
         public void onComplete(@NonNull Task<AuthResult> task) {
             if(task.isSuccessful()){
                 String email = task.getResult().getUser().getEmail();
-                Log.i("Test",email);
                 FirebaseFactory.getUserFirebaseDAO().getUser(email);
             }else{
                 try {
                     throw task.getException();
                 } catch (FirebaseAuthInvalidUserException e) {
-                    Toast.makeText(context,"Verifique seu email e tente novamente",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,context.getString(R.string.invalid_email_message),Toast.LENGTH_SHORT).show();
                 }catch (FirebaseAuthInvalidCredentialsException e){
-                    Toast.makeText(context,"Verifique sua senha e tente novamente",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,context.getString(R.string.invalid_password_message),Toast.LENGTH_SHORT).show();
                 }catch (Exception e){
-                    Toast.makeText(context,"Um erro de conexão aconteceu, por favor tente mais tarde",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,context.getString(R.string.connection_error),Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -127,7 +128,8 @@ public class LoginController implements Observer{
     }
 
     private void warnUpUserAccountDoesNotExist(){
-        Toast.makeText(loginView.getApplicationContext(),"Usuário e/ou senha incorretos",Toast.LENGTH_SHORT).show();
+        Toast.makeText(loginView.getApplicationContext(),context.getString(R.string.user_or_password_incorrect)
+                ,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -143,7 +145,7 @@ public class LoginController implements Observer{
             loginView.openDashboardActivity();
 
         }else{
-            Toast.makeText(context,"Não foi possivel realizar login",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,context.getString(R.string.was_not_possible_to_log_in),Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -75,4 +75,8 @@ public class CreateGymActivity extends AppCompatActivity {
     public void setBtnLocalizationOnClickListener(View.OnClickListener btnLocalizationOnClickListener){
         this.btnLocalization.setOnClickListener(btnLocalizationOnClickListener);
     }
+
+    public void showToastMessage(String message){
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+    }
 }

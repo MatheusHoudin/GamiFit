@@ -65,6 +65,7 @@ public class ProfileFragmentController implements Observer{
     public void update(Observable observable, Object o) {
         if(o instanceof Profile){
             profileList.add((Profile) o);
+            //TODO: See if we can optmize here, just by receiving an information that says all the data is loaded, and after it we can call the profileListAdapter.notifyDataSerChanged()
             profileListAdapter.notifyDataSetChanged();
         }
     }

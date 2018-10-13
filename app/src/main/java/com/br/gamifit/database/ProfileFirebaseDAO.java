@@ -44,8 +44,9 @@ public class ProfileFirebaseDAO extends Observable {
         });
     }
 
-    public void updateOffensiveDays(Profile profile){
+    public boolean updateOffensiveDays(Profile profile){
         DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference();
-        firebaseReference.child("profile/"+profile.getCode()).child("progress").setValue(profile.getProgress());
+        return firebaseReference.child("profile/"+profile.getCode()).child("progress")
+                .setValue(profile.getProgress()).isSuccessful();
     }
 }

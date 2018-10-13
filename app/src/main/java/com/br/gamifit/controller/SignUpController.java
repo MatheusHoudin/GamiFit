@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.br.gamifit.R;
 import com.br.gamifit.activity.SignUpActivity;
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.OperationResult;
@@ -77,7 +78,7 @@ public class SignUpController implements Observer {
             user.createUserAccount();
 
         }else{
-            Toast.makeText(context,"Senhas não coincidem",Toast.LENGTH_SHORT).show();
+            activity.showToastMessage(activity.getString(R.string.passwords_are_not_the_same));
         }
     }
 
@@ -97,6 +98,7 @@ public class SignUpController implements Observer {
                     preferences.saveUserData(user.getName(),user.getEmail(),user.getPassword(),user.getCode());
                     activity.openDashboardActivity();
                 }else{
+                    //TODO: Change this message, the user even doesnt know what is preferencias
                     Toast.makeText(activity,"Erro ao salvar preferencias",Toast.LENGTH_SHORT).show();
                 }
             }
@@ -126,14 +128,13 @@ public class SignUpController implements Observer {
         try {
             throw caughtException;
         }catch(FirebaseAuthWeakPasswordException e){
-            Toast.makeText(context,"Senha muito fraca, inclua letras maiúsculas,minúscu" +
-                "las e caracteres especiais",Toast.LENGTH_SHORT).show();
+            activity.showToastMessage(activity.getString(R.string.weak_password));
         }catch(FirebaseAuthInvalidCredentialsException e){
-            Toast.makeText(context,"Email inválido",Toast.LENGTH_SHORT).show();
+            activity.showToastMessage(activity.getString(R.string.invalid_email));
         }catch(FirebaseAuthUserCollisionException e){
-            Toast.makeText(context,"Já existe um usuário cadastrado com este email",Toast.LENGTH_SHORT).show();
+            activity.showToastMessage(activity.getString(R.string.user_account_with_this_email_already_exists));
         }catch(Exception e){
-            Toast.makeText(context,"Erro ao salvar usuário",Toast.LENGTH_SHORT).show();
+            activity.showToastMessage(activity.getString(R.string.unexpected_problem));
         }
     }
 
@@ -141,9 +142,9 @@ public class SignUpController implements Observer {
         try {
             throw caughtException;
         }catch(DatabaseException e){
-            Toast.makeText(context,"Base de dados está inacessível",Toast.LENGTH_SHORT).show();
+            activity.showToastMessage(activity.getString(R.string.database_is_off));
         } catch (Exception e) {
-            e.printStackTrace();
+            activity.showToastMessage(activity.getString(R.string.unexpected_problem));
         }
     }
 }

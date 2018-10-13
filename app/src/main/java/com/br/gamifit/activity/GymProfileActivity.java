@@ -133,7 +133,7 @@ public class GymProfileActivity extends AppCompatActivity
         return true;
     }
 
-    public void showMessage(String message){
+    public void showToastMessage(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }

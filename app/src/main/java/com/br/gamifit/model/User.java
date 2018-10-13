@@ -55,7 +55,6 @@ public class User extends Observable implements Serializable{
             }
             return bitmap;
         } catch (WriterException e) {
-            Log.i("User-generateQRCode",e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -69,7 +68,6 @@ public class User extends Observable implements Serializable{
     }
 
     public void createUserAccount(){
-        Log.i("debugando","createUserAccount");
         IUserDAO userDAO = FirebaseFactory.getUserFirebaseDAO();
         userDAO.createUserAcount(this);
     }

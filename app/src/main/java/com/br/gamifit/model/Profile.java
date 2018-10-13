@@ -28,6 +28,11 @@ public class Profile implements Serializable{
         return profileFirebaseDAO.createProfile(this);
     }
 
+    public boolean updateOffensiveDaysNumber(){
+        ProfileFirebaseDAO profileFirebaseDAO = FirebaseFactory.getProfileFirebaseDAO();
+        return profileFirebaseDAO.updateOffensiveDays(this);
+    }
+
     public Progress getProgress() {
         return progress;
     }
@@ -83,10 +88,19 @@ public class Profile implements Serializable{
         return checkInOut;
     }
 
+    public boolean verifyScannedCodeIsTheSameAsItsGym(String scannedCode){
+        return gym.getCode().equals(scannedCode);
+    }
+
     public void setCheckInOut(boolean checkInOut) {
         this.checkInOut = checkInOut;
         if(!checkInOut){
-            this.progress.setOffensiveDays(this.getProgress().getOffensiveDays()+1);
+            increaseOffensiveDaysNumber();
         }
+    }
+
+    private void increaseOffensiveDaysNumber(){
+        //TODO: See of you can use a Observer design patter here to notify the GymProfileActivity about its change
+        this.progress.setOffensiveDays(this.getProgress().getOffensiveDays()+1);
     }
 }

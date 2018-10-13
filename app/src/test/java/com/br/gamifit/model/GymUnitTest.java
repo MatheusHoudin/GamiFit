@@ -47,14 +47,12 @@ public class GymUnitTest {
     public void sendInviteToJoinTest(){
         Gym gym = new Gym("Fitness Everyhere","f9bfp43");
 
-        GymInvite gymInvite = mock(GymInvite.class);
         User user = mock(User.class);
         when(user.getName()).thenReturn("Matheus Gomes");
         when(user.getEmail()).thenReturn("matheusdin04@gmail.com");
         when(user.getPassword()).thenReturn("msabd9334");
 
-        when(gymInvite.getUser()).thenReturn(user);
-        when(gymInvite.getGym()).thenReturn(gym);
+        GymInvite gymInvite = gym.createInviteToJoin(user);
 
         InviteFirebaseDAO inviteFirebaseDAO = mock(InviteFirebaseDAO.class);
         FirebaseDatabase firebaseDatabase = mock(FirebaseDatabase.class);

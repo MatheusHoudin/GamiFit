@@ -81,4 +81,32 @@
     <string name="action_my_gyms">Minhas academias</string>
     <string name="title_activity_my_gym">MyGymActivity</string>
 
+    <string name="offensive_days">dias de ofensiva</string>
+    <string name="operation_failed">Não foi possível completar a operação</string>
+    <string name="create_gym_profile_sucess_part1">Perfil criado na academia </string>
+    <string name="create_gym_profile_sucess_part2"> criado com sucesso</string>
+    <string name="unexpected_error_message">Um erro inesperado ocorreu</string>
+    <string name="gym_created_sucessfully">Academia criada com sucesso</string>
+    <string name="gym_created_not_sucessfully">Não foi possível cadastrar esta academia</string>
+
+    <string name="checkin_checkout_scan_prompt">Check in / Check out</string>
+    <string name="successful_checkin">Check in efetuado com sucesso</string>
+    <string name="successful_checkout">Check out efetuado com sucesso</string>
+
+    <string name="invalid_email_message">Verifique seu email e tente novamente</string>
+    <string name="invalid_password_message">Verifique sua senha e tente novamente</string>
+    <string name="connection_error">Um erro de conexão aconteceu, por favor tente mais tarde</string>
+    <string name="user_or_password_incorrect">Usuário ou senha incorretos</string>
+    <string name="was_not_possible_to_log_in">Não foi possivel realizar login</string>
+
+    <string name="invite_sent_succesfully">Convite enviado com sucesso</string>
+    <string name="invite_sent_unsuccesfully">Este convite não pôde ser enviado</string>
+    <string name="scanned_code_not_equals_to_gym_code">Este código não se refere a esta academia</string>
+
+    <string name="passwords_are_not_the_same">Senhas não coincidem</string>
+    <string name="weak_password">Senha fraca, tente utilizar mais caracteres</string>
+    <string name="invalid_email">Email inválido</string>
+    <string name="user_account_with_this_email_already_exists">Já existe um usuário cadastrado com este email</string>
+    <string name="unexpected_problem">Um erro aconteceu, verifique sua conexão de internet</string>
+    <string name="database_is_off">Base de dados inacessível</string>
 </resources>

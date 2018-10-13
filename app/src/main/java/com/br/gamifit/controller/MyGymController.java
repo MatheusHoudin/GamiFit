@@ -6,6 +6,7 @@ import com.br.gamifit.R;
 import com.br.gamifit.activity.MyGymActivity;
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.UserFirebaseDAO;
+import com.br.gamifit.helper.ScanHelper;
 import com.br.gamifit.model.Gym;
 import com.br.gamifit.model.User;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -17,12 +18,10 @@ public class MyGymController implements Observer{
     private static MyGymController myGymController;
 
     private Gym gym;
-    private Context context;
     private MyGymActivity myGymActivity;
 
     private MyGymController(@NonNull MyGymActivity myGymActivity, Gym gym){
         this.myGymActivity = myGymActivity;
-        this.context = myGymActivity.getApplicationContext();
         this.gym = gym;
     }
 
@@ -45,13 +44,11 @@ public class MyGymController implements Observer{
      * The result of it is sent to MyGymActivity(myGymActivity below)
      */
     public void openScanCodeActivity(){
-        IntentIntegrator integrator = new IntentIntegrator(myGymActivity);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-        integrator.setPrompt(context.getResources().getString(R.string.qrcode_text));
-        integrator.setCameraId(0);
-        integrator.setBeepEnabled(true);
-        integrator.setBarcodeImageEnabled(true);
-        integrator.initiateScan();
+        int backCamera = 0;
+        ScanHelper scanHelper = new ScanHelper(backCamera,myGymActivity
+                ,myGymActivity.getString(R.string.checkin_checkout_scan_prompt));
+
+        scanHelper.showScan();
     }
 
     public void sendInviteToUser(String scannedUserCode){
@@ -62,9 +59,9 @@ public class MyGymController implements Observer{
     private void createAndSendInviteToUser(User userToInvite){
         boolean result = gym.sendInviteToJoin(userToInvite);
         if(result){
-            myGymActivity.showToastMessage("Convite enviado com sucesso");
+            myGymActivity.showToastMessage(myGymActivity.getString(R.string.invite_sent_succesfully));
         }else{
-            myGymActivity.showToastMessage("Convite não enviado com sucesso");
+            myGymActivity.showToastMessage(myGymActivity.getString(R.string.invite_sent_unsuccesfully));
         }
     }
 

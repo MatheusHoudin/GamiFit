@@ -50,7 +50,7 @@ public class InvitationController implements Observer {
     public void findMyInvites(){
         String loggedUserCode = MyPreferences.getMyPreferences(context).getUserCode();
         InviteFirebaseDAO inviteFirebaseDAO = FirebaseFactory.getInviteFirebaseDAO();
-        Log.i("logged code",loggedUserCode);
+        //TODO: Analize here what happens when the line below is executed, maybe we want it to execute, because it'll clean the list before loading all the itens again
 //        invites.clear();
         inviteFirebaseDAO.getUserInvites(loggedUserCode);
     }
@@ -63,6 +63,7 @@ public class InvitationController implements Observer {
     public void update(Observable observable, Object o) {
         if(o instanceof GymInvite){
             invites.add((GymInvite) o);
+            //TODO: See if we can optmize here, just by receiving an information that says all the data is loaded, and after it we can call the adapter.notifyDataSerChanged()
             adapter.notifyDataSetChanged();
         }
     }

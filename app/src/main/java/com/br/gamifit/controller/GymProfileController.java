@@ -5,6 +5,7 @@ import com.br.gamifit.activity.GymProfileActivity;
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.ProfileFirebaseDAO;
 import com.br.gamifit.helper.MyPreferences;
+import com.br.gamifit.helper.ScanHelper;
 import com.br.gamifit.model.Profile;
 import com.google.zxing.integration.android.IntentIntegrator;
 
@@ -27,25 +28,35 @@ public class GymProfileController {
     }
 
     public void openScanCodeActivity(){
-        IntentIntegrator integrator = new IntentIntegrator(gymProfileActivity);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-        integrator.setPrompt("Check in / Check out");
-        integrator.setCameraId(0);
-        integrator.setBeepEnabled(true);
-        integrator.setBarcodeImageEnabled(true);
-        integrator.initiateScan();
+        int backCamera = 0;
+        ScanHelper scanHelper = new ScanHelper(backCamera,gymProfileActivity,gymProfileActivity
+                .getString(R.string.checkin_checkout_scan_prompt));
+
+        scanHelper.showScan();
     }
 
     public void handleCheckInCheckOut(String scannedUserCode){
-        boolean checkInOut = profile.isCheckInOut();
-        if(!checkInOut){
-            profile.setCheckInOut(true);
-            gymProfileActivity.showMessage("Check in efetuado com sucesso");
+        if(profile.verifyScannedCodeIsTheSameAsItsGym(scannedUserCode)){
+            boolean checkInOut = profile.isCheckInOut();
+            if(!checkInOut){
+                handleCheckIn();
+            }else{
+                handleCheckOut();
+            }
         }else{
-            gymProfileActivity.showMessage("Check out efetuado com sucesso");
-            profile.setCheckInOut(false);
-            ProfileFirebaseDAO profileFirebaseDAO = FirebaseFactory.getProfileFirebaseDAO();
-            profileFirebaseDAO.updateOffensiveDays(profile);
+            gymProfileActivity.showToastMessage(gymProfileActivity.getString(R.string.scanned_code_not_equals_to_gym_code));
         }
+    }
+
+    private void handleCheckOut(){
+        gymProfileActivity.showToastMessage(gymProfileActivity.getString(R.string.successful_checkout));
+        //TODO: Make something here that shows the user that he/she achieved the day goal(plus one offensive day)
+        profile.setCheckInOut(false);
+        profile.updateOffensiveDaysNumber();
+    }
+
+    private void handleCheckIn(){
+        profile.setCheckInOut(true);
+        gymProfileActivity.showToastMessage(gymProfileActivity.getString(R.string.successful_checkin));
     }
 }

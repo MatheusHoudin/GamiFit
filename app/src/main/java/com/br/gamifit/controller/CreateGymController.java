@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.br.gamifit.R;
 import com.br.gamifit.activity.CreateGymActivity;
 import com.br.gamifit.helper.MyPreferences;
 import com.br.gamifit.model.Gym;
@@ -63,10 +64,10 @@ public class CreateGymController {
         try{
             this.gym = new Gym(gymName,localization);
         }catch(InvalidGymDataException e){
-            Toast.makeText(createGymActivity.getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+            createGymActivity.showToastMessage(e.getMessage());
             return false;
         }catch (Exception e) {
-            Toast.makeText(createGymActivity.getApplicationContext(), "Um erro inesperado ocorreu", Toast.LENGTH_LONG).show();
+            createGymActivity.showToastMessage(createGymActivity.getString(R.string.unexpected_error_message));
             return false;
         }
         return true;
@@ -78,11 +79,10 @@ public class CreateGymController {
             gym.setGymOwner(user);
             Exception exception = gym.saveGym();
             if(exception==null){
-                Toast.makeText(createGymActivity.getApplicationContext(),"Academia cadastrada com sucesso",Toast.LENGTH_LONG).show();
+                createGymActivity.showToastMessage(createGymActivity.getString(R.string.gym_created_sucessfully));
                 createGymActivity.finish();
             }else{
-                Toast.makeText(createGymActivity.getApplicationContext(),"Não foi possível " +
-                        "cadastrar esta academia",Toast.LENGTH_LONG).show();
+                createGymActivity.showToastMessage(createGymActivity.getString(R.string.gym_created_not_sucessfully));
             }
         }
     }

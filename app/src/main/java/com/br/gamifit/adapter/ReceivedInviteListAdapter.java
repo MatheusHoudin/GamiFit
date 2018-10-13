@@ -59,9 +59,11 @@ public class ReceivedInviteListAdapter extends BaseAdapter{
             public void onClick(View view) {
                 if(invite.acceptInvite()){
                     removeInvite(invite);
-                    Toast.makeText(context,"Perfil na "+invite.getGym().getName()+" criado com sucesso",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,context.getString(R.string.create_gym_profile_sucess_part1)
+                            +invite.getGym().getName()+context.getString(R.string.create_gym_profile_sucess_part2)
+                            ,Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(context,"Não foi possível completar a operação",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,context.getString(R.string.operation_failed),Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -75,6 +77,8 @@ public class ReceivedInviteListAdapter extends BaseAdapter{
             public void onClick(View view) {
                 if(invite.rejectInvite()){
                     removeInvite(invite);
+                }else{
+                    Toast.makeText(context,context.getString(R.string.operation_failed),Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -84,9 +88,8 @@ public class ReceivedInviteListAdapter extends BaseAdapter{
     private void removeInvite(GymInvite invite){
         InviteFirebaseDAO inviteFirebaseDAO = FirebaseFactory.getInviteFirebaseDAO();
         if(inviteFirebaseDAO.delete(invite)){
-            Log.i("Remove","Removed sucessfully");
+            gymInvites.remove(invite);
+            this.notifyDataSetChanged();
         }
-        gymInvites.remove(invite);
-        this.notifyDataSetChanged();
     }
 }

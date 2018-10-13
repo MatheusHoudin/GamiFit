@@ -57,6 +57,7 @@ public class MyGymListController implements Observer{
         if(observable instanceof GymFirebaseDAO){
             if(o instanceof Gym){
                 myGymsList.add((Gym) o);
+                //TODO: See if we can optmize here, just by receiving an information that says all the data is loaded, and after it we can call the myGymListAdapter.notifyDataSerChanged()
                 myGymsListAdapter.notifyDataSetChanged();
             }
         }
