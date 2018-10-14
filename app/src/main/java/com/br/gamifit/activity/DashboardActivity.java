@@ -88,23 +88,11 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }else if(id == R.id.action_my_gyms){
             dashboardController.openMyGymAticity();
         }else if(id == R.id.action_my_qrcode){
-            generateUserQRCodeAlertDialog();
+            dashboardController.showUserQRCodeBitMap();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void generateUserQRCodeAlertDialog(){
-        Bitmap userQRCodeBitmap = dashboardController.getUserBitmapBasedOnHisCode();
-        ImageView imageView = new ImageView(this);
-        imageView.setImageBitmap(userQRCodeBitmap);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.user_code);
-        builder.setView(imageView);
-        builder.setNeutralButton(R.string.close,null);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 
 
     @SuppressWarnings("StatementWithEmptyBody")

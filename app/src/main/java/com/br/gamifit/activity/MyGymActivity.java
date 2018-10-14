@@ -89,6 +89,8 @@ public class MyGymActivity extends AppCompatActivity
             return true;
         }else if(id == R.id.action_invite_qrcode_gym){
             myGymController.openScanCodeActivity();
+        }else if(id == R.id.action_gym_qrcode){
+            myGymController.showUserQRCodeBitMap();
         }
 
         return super.onOptionsItemSelected(item);

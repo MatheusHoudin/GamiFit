@@ -41,25 +41,6 @@ public class User extends Observable implements Serializable{
         this.setPassword(password);
     }
 
-    public Bitmap generateQRCode(){
-        QRCodeWriter writer = new QRCodeWriter();
-        try {
-            BitMatrix bitMatrix = writer.encode(this.code, BarcodeFormat.QR_CODE,600,600);
-            int height = bitMatrix.getHeight();
-            int width = bitMatrix.getWidth();
-            Bitmap bitmap = Bitmap.createBitmap(width,height,Bitmap.Config.RGB_565);
-            for(int x=0;x<width;x++){
-                for(int y=0;y<height;y++){
-                    bitmap.setPixel(x,y,bitMatrix.get(x,y)? Color.BLACK:Color.WHITE);
-                }
-            }
-            return bitmap;
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public GymInvite createInviteToJoin(Gym gym){
         GymInvite invite= new GymInvite();
         invite.setUser(this);

@@ -50,7 +50,8 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configurações</string>
-    <string name="action_qrcode_gym">Convidar</string>
+    <string name="action_invite_qrcode_gym">Convidar</string>
+    <string name="action_gym_qrcode">Meu QRCode</string>
     <string name="action_checkin_checkout">Check in/Check out</string>
 
     <string name="action_search">Procurar</string>
@@ -99,6 +100,7 @@
     <string name="user_or_password_incorrect">Usuário ou senha incorretos</string>
     <string name="was_not_possible_to_log_in">Não foi possivel realizar login</string>
 
+    <string name="send_invite_to_user_scan_prompt">Enviar convite</string>
     <string name="invite_sent_succesfully">Convite enviado com sucesso</string>
     <string name="invite_sent_unsuccesfully">Este convite não pôde ser enviado</string>
     <string name="scanned_code_not_equals_to_gym_code">Este código não se refere a esta academia</string>

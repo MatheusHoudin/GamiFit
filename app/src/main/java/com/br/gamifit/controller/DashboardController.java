@@ -10,6 +10,7 @@ import com.br.gamifit.activity.DashboardActivity;
 import com.br.gamifit.activity.InvitationActivity;
 import com.br.gamifit.activity.MyGymListActivity;
 import com.br.gamifit.helper.MyPreferences;
+import com.br.gamifit.helper.QRCodeHelper;
 import com.br.gamifit.model.User;
 
 public class DashboardController {
@@ -30,9 +31,10 @@ public class DashboardController {
         return dashboardController;
     }
 
-    public Bitmap getUserBitmapBasedOnHisCode(){
+    public void showUserQRCodeBitMap(){
         User user = MyPreferences.getMyPreferences(context).getUser();
-        return user.generateQRCode();
+        QRCodeHelper qrCodeHelper = new QRCodeHelper(600,600);
+        qrCodeHelper.generateUserQRCodeAlertDialog(dashboardView,user.getCode());
     }
 
     public void openInvitesActivity(){

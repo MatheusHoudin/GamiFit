@@ -1,11 +1,13 @@
 package com.br.gamifit.controller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import com.br.gamifit.R;
 import com.br.gamifit.activity.MyGymActivity;
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.UserFirebaseDAO;
+import com.br.gamifit.helper.QRCodeHelper;
 import com.br.gamifit.helper.ScanHelper;
 import com.br.gamifit.model.Gym;
 import com.br.gamifit.model.User;
@@ -46,7 +48,7 @@ public class MyGymController implements Observer{
     public void openScanCodeActivity(){
         int backCamera = 0;
         ScanHelper scanHelper = new ScanHelper(backCamera,myGymActivity
-                ,myGymActivity.getString(R.string.checkin_checkout_scan_prompt));
+                ,myGymActivity.getString(R.string.send_invite_to_user_scan_prompt));
 
         scanHelper.showScan();
     }
@@ -65,6 +67,10 @@ public class MyGymController implements Observer{
         }
     }
 
+    public void showUserQRCodeBitMap(){
+        QRCodeHelper qrCodeHelper = new QRCodeHelper(600,600);
+        qrCodeHelper.generateUserQRCodeAlertDialog(myGymActivity,gym.getCode());
+    }
     @Override
     public void update(Observable observable, Object o) {
         if(o instanceof User){
