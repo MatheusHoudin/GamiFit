@@ -13,5 +13,12 @@
         android:title="@string/action_checkin_checkout"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/action_offensive_days"
+        android:icon="@drawable/offensive_days_count"
+        android:title="@string/offensive_days"
+        android:orderInCategory="400"
+        app:showAsAction="always"/>
+
 
 </menu>

@@ -1,6 +1,9 @@
 package com.br.gamifit.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 
 import com.br.gamifit.R;
 import com.br.gamifit.controller.GymProfileController;
+import com.br.gamifit.helper.OffensiveDaysDrawable;
 import com.br.gamifit.model.Profile;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -26,6 +30,7 @@ import com.google.zxing.integration.android.IntentResult;
 public class GymProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private GymProfileController gymProfileController;
+    private Menu menu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +78,36 @@ public class GymProfileActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        this.menu=menu;
         getMenuInflater().inflate(R.menu.my_gym_profile, menu);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        Log.i("COUNTTT","oNpREPAPEERNF");
+        gymProfileController.updateOffensiveDaysCount();
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void setCount(String count) {
+        Log.i("COUNTTT",count);
+        MenuItem menuItem = menu.findItem(R.id.action_offensive_days);
+        LayerDrawable icon = (LayerDrawable) menuItem.getIcon();
+
+        OffensiveDaysDrawable badge;
+
+        Drawable reuse = icon.findDrawableByLayerId(R.id.ic_group_count);
+        if (reuse != null && reuse instanceof OffensiveDaysDrawable) {
+            Log.i("COUNTT","reusing");
+            badge = (OffensiveDaysDrawable) reuse;
+        } else {
+            badge = new OffensiveDaysDrawable(this);
+        }
+
+        badge.setCount(count);
+        icon.mutate();
+        icon.setDrawableByLayerId(R.id.ic_group_count, badge);
     }
 
     @Override
@@ -100,7 +133,6 @@ public class GymProfileActivity extends AppCompatActivity
         if(result != null) {
             if(result.getContents() != null) {
                 String scannedUserCode = result.getContents();
-                Log.i("code",scannedUserCode);
                 gymProfileController.handleCheckInCheckOut(scannedUserCode);
             }
         } else {

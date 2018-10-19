@@ -51,7 +51,7 @@ public class InvitationController implements Observer {
         String loggedUserCode = MyPreferences.getMyPreferences(context).getUserCode();
         InviteFirebaseDAO inviteFirebaseDAO = FirebaseFactory.getInviteFirebaseDAO();
         //TODO: Analize here what happens when the line below is executed, maybe we want it to execute, because it'll clean the list before loading all the itens again
-//        invites.clear();
+        invites.clear();
         inviteFirebaseDAO.getUserInvites(loggedUserCode);
     }
 

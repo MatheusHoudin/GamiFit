@@ -82,7 +82,10 @@
     <string name="action_my_gyms">Minhas academias</string>
     <string name="title_activity_my_gym">MyGymActivity</string>
 
-    <string name="offensive_days">dias de ofensiva</string>
+    <string name="offensive_days">Ofensiva:</string>
+
+    <string name="less_than_forty_minutes_training_exception_message">Você ainda não atingiu sua meta, vamos lá!</string>
+
     <string name="operation_failed">Não foi possível completar a operação</string>
     <string name="create_gym_profile_sucess_part1">Perfil criado na academia </string>
     <string name="create_gym_profile_sucess_part2"> criado com sucesso</string>
@@ -104,6 +107,8 @@
     <string name="invite_sent_succesfully">Convite enviado com sucesso</string>
     <string name="invite_sent_unsuccesfully">Este convite não pôde ser enviado</string>
     <string name="scanned_code_not_equals_to_gym_code">Este código não se refere a esta academia</string>
+    <string name="exercising_for_less_than_forty_minutes">Você não completou a meta de 40 minutos diários</string>
+    <string name="trying_to_checkin_twice_a_day">Não é possível fazer check in duas vezes no mesmo dia</string>
 
     <string name="passwords_are_not_the_same">Senhas não coincidem</string>
     <string name="weak_password">Senha fraca, tente utilizar mais caracteres</string>

@@ -10,6 +10,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 
 public class ProfileFirebaseDAO extends Observable {
@@ -18,7 +20,8 @@ public class ProfileFirebaseDAO extends Observable {
 
     public boolean createProfile(Profile profile){
         DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference();
-        return firebaseReference.child("profile").push().setValue(profile).isSuccessful();
+        profile.setCode(firebaseReference.child("profile").push().getKey());
+        return firebaseReference.child("profile").child(profile.getCode()).setValue(profile).isSuccessful();
     }
 
     public void getAllMyProfiles(String userCode){
@@ -46,7 +49,12 @@ public class ProfileFirebaseDAO extends Observable {
 
     public boolean updateOffensiveDays(Profile profile){
         DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference();
-        return firebaseReference.child("profile/"+profile.getCode()).child("progress")
+        return firebaseReference.child("profile/"+profile.getCode()+"/progress")
                 .setValue(profile.getProgress()).isSuccessful();
+    }
+
+    public boolean checkInOut(Profile profile){
+        DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference();
+        return firebaseReference.child("profile/"+profile.getCode()).setValue(profile.getCheckInOut()).isSuccessful();
     }
 }

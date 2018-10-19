@@ -2,16 +2,20 @@ package com.br.gamifit.model;
 
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.ProfileFirebaseDAO;
-import com.google.firebase.database.Exclude;
+import com.br.gamifit.model.exception.LessThanFortyMinutesTrainingException;
+import com.br.gamifit.model.exception.MoreThanOneCheckInOnOneDayException;
+
+import org.threeten.bp.LocalDateTime;
 
 import java.io.Serializable;
+import java.util.Observable;
 
-public class Profile implements Serializable{
+public class Profile extends Observable implements Serializable{
     private User user;
     private Gym gym;
     private String code;
     private Progress progress;
-    private boolean checkInOut; // True == Check In is done
+    private CheckInOut checkInOut;
     private boolean active;
 
     public Profile(){}
@@ -65,6 +69,14 @@ public class Profile implements Serializable{
         this.active = active;
     }
 
+    public CheckInOut getCheckInOut() {
+        return checkInOut;
+    }
+
+    public void setCheckInOut(CheckInOut checkInOut) {
+        this.checkInOut = checkInOut;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return this.hashCode()==obj.hashCode();
@@ -83,24 +95,45 @@ public class Profile implements Serializable{
         this.code = code;
     }
 
-    @Exclude
-    public boolean isCheckInOut() {
-        return checkInOut;
-    }
-
     public boolean verifyScannedCodeIsTheSameAsItsGym(String scannedCode){
         return gym.getCode().equals(scannedCode);
     }
 
-    public void setCheckInOut(boolean checkInOut) {
-        this.checkInOut = checkInOut;
-        if(!checkInOut){
-            increaseOffensiveDaysNumber();
+    public void checkInCheckOut() throws  MoreThanOneCheckInOnOneDayException {
+        DateTime actualDateTime = createActualDateTime();
+        if(checkInOut!=null){
+            if(checkInOut.isCheckIn()){
+                if(checkInOut.getDateTime().compareDateWithCheckOutDateTime(actualDateTime)){
+
+                }else{
+                    checkInOut.checkIn(actualDateTime,this);
+                }
+            }
+        }else{
+            checkInOut.checkIn(actualDateTime,this);
         }
     }
 
-    private void increaseOffensiveDaysNumber(){
-        //TODO: See of you can use a Observer design patter here to notify the GymProfileActivity about its change
-        this.progress.setOffensiveDays(this.getProgress().getOffensiveDays()+1);
+    //TODO: See here if the function is updating the offensive days
+    private void handleCheckOut(DateTime actualDateTime) throws LessThanFortyMinutesTrainingException {
+        try {
+            checkInOut.checkOut(actualDateTime,this);
+            updateOffensiveDaysNumber();
+        } catch (LessThanFortyMinutesTrainingException e) {
+            throw e;
+        }
     }
+
+    public DateTime createActualDateTime(){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTime actualDateTime = new DateTime();
+        actualDateTime.setHour(localDateTime.getHour());
+        actualDateTime.setMinutes(localDateTime.getMinute());
+        actualDateTime.setMonthDay(localDateTime.getDayOfMonth());
+        actualDateTime.setMonth(localDateTime.getMonthValue());
+        actualDateTime.setYear(localDateTime.getYear());
+        return actualDateTime;
+    }
+
+
 }

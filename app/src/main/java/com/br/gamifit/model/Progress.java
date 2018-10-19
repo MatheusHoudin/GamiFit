@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Progress implements Serializable{
     private int offensiveDays;
+    private CheckInOut checkIn;
 
     public Progress(){}
 
@@ -17,5 +18,13 @@ public class Progress implements Serializable{
 
     public void setOffensiveDays(int offensiveDays) {
         this.offensiveDays = offensiveDays;
+    }
+
+    public CheckInOut getCheckIn() {
+        return checkIn;
+    }
+
+    public void setCheckIn(CheckInOut checkIn) {
+        this.checkIn = checkIn;
     }
 }
