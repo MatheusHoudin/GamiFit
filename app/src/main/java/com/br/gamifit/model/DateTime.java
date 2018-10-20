@@ -1,6 +1,7 @@
 package com.br.gamifit.model;
 
 import android.annotation.TargetApi;
+import android.util.Log;
 
 import org.threeten.bp.LocalDateTime;
 
@@ -40,11 +41,11 @@ public class DateTime {
      * the check out time to be 40 minutes after the check in time
      */
     public boolean compareTimeWithCheckOutDateTime(DateTime checkOutTime){
-        if(this.hour==checkOutTime.getHour()){
-            int trainingTime = checkOutTime.getMinutes() - this.minutes;
+        if(this.getHour()==checkOutTime.getHour()){
+            int trainingTime = checkOutTime.getMinutes() - this.getMinutes();
             return trainingTime >= MINIMUM_TRAINING_MINUTES;
-        }else if(this.hour<checkOutTime.getHour()){
-            int minutesLeftToCheckInHour = MINUTES_PER_HOUR - this.minutes;
+        }else if(this.getHour()<checkOutTime.getHour()){
+            int minutesLeftToCheckInHour = MINUTES_PER_HOUR - this.getMinutes();
             int trainingTime = minutesLeftToCheckInHour + checkOutTime.getMinutes();
             return trainingTime >= MINIMUM_TRAINING_MINUTES;
         }else{

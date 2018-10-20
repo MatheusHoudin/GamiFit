@@ -26,7 +26,7 @@ public class CheckInOut {
     }
 
     public void checkOut(DateTime checkOutDateTime, Profile profile) throws LessThanFortyMinutesTrainingException {
-        if(checkOutDateTime.compareTimeWithCheckOutDateTime(dateTime)){
+        if(getDateTime().compareTimeWithCheckOutDateTime(checkOutDateTime)){
             this.setCheckIn(false);
             this.setDateTime(checkOutDateTime);
             ProfileFirebaseDAO profileFirebaseDAO = FirebaseFactory.getProfileFirebaseDAO();

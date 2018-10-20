@@ -33,6 +33,7 @@ public class Profile extends Observable implements Serializable{
     }
 
     public boolean updateOffensiveDaysNumber(){
+        this.progress.setOffensiveDays(this.progress.getOffensiveDays()+1);
         ProfileFirebaseDAO profileFirebaseDAO = FirebaseFactory.getProfileFirebaseDAO();
         return profileFirebaseDAO.updateOffensiveDays(this);
     }
@@ -99,21 +100,71 @@ public class Profile extends Observable implements Serializable{
         return gym.getCode().equals(scannedCode);
     }
 
-    public void checkInCheckOut() throws  MoreThanOneCheckInOnOneDayException {
+    /**
+     * @throws MoreThanOneCheckInOnOneDayException
+     * @throws LessThanFortyMinutesTrainingException
+     * This method is responsible for the check in and check out logic, it checks whether the check in
+     * is already made, then if yes, it calls handleCheckInCheckOutWhenCheckInIsAlreadyMade to handle
+     * this situation, otherwise if check out is already made it calls handleCheckInCheckOutWhenCheckOutIsAlreadyMade,
+     * if its the first time the user is trying to do check in or check out it will initialize this.checkInOut and
+     * make the first check in.
+     */
+    public void checkInCheckOut() throws MoreThanOneCheckInOnOneDayException, LessThanFortyMinutesTrainingException {
         DateTime actualDateTime = createActualDateTime();
         if(checkInOut!=null){
             if(checkInOut.isCheckIn()){
-                if(checkInOut.getDateTime().compareDateWithCheckOutDateTime(actualDateTime)){
-
-                }else{
-                    checkInOut.checkIn(actualDateTime,this);
-                }
+                handleCheckInCheckOutWhenCheckInIsAlreadyMade(actualDateTime);
+            }else{
+                handleCheckInCheckOutWhenCheckOutIsAlreadyMade(actualDateTime);
             }
+        }else{
+            handleFirstUserCheckIn(actualDateTime);
+        }
+    }
+
+    /**
+     * @param actualDateTime
+     * @throws MoreThanOneCheckInOnOneDayException
+     * It handles the first user check in on the profile, initializing the variable checkInOut in order
+     * for it to be saved on the database and to be caught the next time the user logs in the profile
+     */
+    private void handleFirstUserCheckIn(DateTime actualDateTime) throws MoreThanOneCheckInOnOneDayException {
+        checkInOut = new CheckInOut();
+        checkInOut.checkIn(actualDateTime,this);
+    }
+
+    /**
+     * @param actualDateTime
+     * @throws LessThanFortyMinutesTrainingException
+     * @throws MoreThanOneCheckInOnOneDayException
+     * It handles when there is already a check in on this profile and the user tries to scan the Gym QRCode,
+     * it will see if the user is trying to do a check out, therefore it has to be on the same last check in date and time,
+     * otherwise the user will have to do a new check in, because its another day.
+     */
+    private void handleCheckInCheckOutWhenCheckInIsAlreadyMade(DateTime actualDateTime) throws LessThanFortyMinutesTrainingException, MoreThanOneCheckInOnOneDayException {
+        if(checkInOut.getDateTime().compareDateWithCheckOutDateTime(actualDateTime)){
+            handleCheckOut(actualDateTime);
         }else{
             checkInOut.checkIn(actualDateTime,this);
         }
     }
 
+    /**
+     * @param actualDateTime
+     * @throws MoreThanOneCheckInOnOneDayException
+     * It handles when there is already a check out on this profile and the user tries to scan the Gym QRCode,
+     * it will see if the user is trying to do a check in, therefore it has to be on at least one day next to the
+     * last check in day, otherwise if the user is trying to do a check in on the same day as the last check out
+     * it will throw MoreThanOneCheckInOnOneDayException, because the user is allowed to do a check in and check
+     * out once a day.
+     */
+    private void handleCheckInCheckOutWhenCheckOutIsAlreadyMade(DateTime actualDateTime) throws MoreThanOneCheckInOnOneDayException {
+        if(checkInOut.getDateTime().compareDateWithCheckOutDateTime(actualDateTime)){
+            throw new MoreThanOneCheckInOnOneDayException();
+        }else{
+            checkInOut.checkIn(actualDateTime,this);
+        }
+    }
     //TODO: See here if the function is updating the offensive days
     private void handleCheckOut(DateTime actualDateTime) throws LessThanFortyMinutesTrainingException {
         try {

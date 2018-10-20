@@ -16,7 +16,7 @@ import java.util.Observable;
 
 public class ProfileFirebaseDAO extends Observable {
 
-
+    private final int UPDATE_OFFENSIVE_DAYS_SUCESSFULL = 1;
 
     public boolean createProfile(Profile profile){
         DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference();
