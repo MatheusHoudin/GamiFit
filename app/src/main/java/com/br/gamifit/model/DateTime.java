@@ -5,9 +5,10 @@ import android.util.Log;
 
 import org.threeten.bp.LocalDateTime;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class DateTime {
+public class DateTime implements Serializable {
     private int hour;
     private int minutes;
     private int year;
@@ -45,6 +46,8 @@ public class DateTime {
             int trainingTime = checkOutTime.getMinutes() - this.getMinutes();
             return trainingTime >= MINIMUM_TRAINING_MINUTES;
         }else if(this.getHour()<checkOutTime.getHour()){
+            int pastHours = checkOutTime.getHour() - this.getHour();
+            if(pastHours>=2) return true;
             int minutesLeftToCheckInHour = MINUTES_PER_HOUR - this.getMinutes();
             int trainingTime = minutesLeftToCheckInHour + checkOutTime.getMinutes();
             return trainingTime >= MINIMUM_TRAINING_MINUTES;

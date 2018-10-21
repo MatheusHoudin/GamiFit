@@ -26,6 +26,7 @@ import com.br.gamifit.helper.OffensiveDaysDrawable;
 import com.br.gamifit.model.Profile;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
 public class GymProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,6 +37,7 @@ public class GymProfileActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gym_profile);
 
+        AndroidThreeTen.init(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

@@ -68,6 +68,7 @@ public class CreateGymActivity extends AppCompatActivity {
     public EditText getGymName() {
         return gymName;
     }
+
     public void setBtnCreateGymOnClickListener(View.OnClickListener btnCreateGymOnClickListener){
         this.btnCreateGym.setOnClickListener(btnCreateGymOnClickListener);
     }

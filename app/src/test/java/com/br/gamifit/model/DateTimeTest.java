@@ -39,6 +39,14 @@ public class DateTimeTest {
     }
 
     @Test
+    public void pastTwoHoursFromCheckInTime(){
+        DateTime checkInTime = new DateTime(14,00,2018,10,17);
+        DateTime checkOutTime = new DateTime(16,00,2018,10,17);
+
+        Assert.assertEquals(true,checkInTime.compareTimeWithCheckOutDateTime(checkOutTime));
+    }
+
+    @Test
     public void pastThirtyNineMinutesFromCheckInTime(){
         DateTime checkInTime = new DateTime(14,40,2018,10,17);
         DateTime checkOutTime = new DateTime(15,19,2018,10,17);

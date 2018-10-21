@@ -165,6 +165,13 @@ public class Profile extends Observable implements Serializable{
             checkInOut.checkIn(actualDateTime,this);
         }
     }
+
+    /**
+     * @param actualDateTime
+     * @throws LessThanFortyMinutesTrainingException
+     * It makes the check out function works, it saves the check out on the database and update the user's offensive days
+     * by calling the updateOffensiveDaysNumber() profile method.
+     */
     //TODO: See here if the function is updating the offensive days
     private void handleCheckOut(DateTime actualDateTime) throws LessThanFortyMinutesTrainingException {
         try {

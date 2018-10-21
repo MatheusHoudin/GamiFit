@@ -5,7 +5,9 @@ import com.br.gamifit.database.ProfileFirebaseDAO;
 import com.br.gamifit.model.exception.LessThanFortyMinutesTrainingException;
 import com.br.gamifit.model.exception.MoreThanOneCheckInOnOneDayException;
 
-public class CheckInOut {
+import java.io.Serializable;
+
+public class CheckInOut implements Serializable {
     private DateTime dateTime;
     private boolean isCheckIn;
 
@@ -38,7 +40,7 @@ public class CheckInOut {
     }
 
     public void checkIn(DateTime checkInDateTime, Profile profile) throws MoreThanOneCheckInOnOneDayException {
-        if(dateTime.compareDateWithCheckOutDateTime(checkInDateTime)){
+        if(dateTime!=null && dateTime.compareDateWithCheckOutDateTime(checkInDateTime)){
             throw new MoreThanOneCheckInOnOneDayException();
         }else{
             this.setCheckIn(true);

@@ -4,7 +4,9 @@ import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.InviteFirebaseDAO;
 import com.br.gamifit.database.ProfileFirebaseDAO;
 
-public class GymInvite{
+import java.io.Serializable;
+
+public class GymInvite implements Serializable {
     private String code;
     private Gym gym;
     private User user;

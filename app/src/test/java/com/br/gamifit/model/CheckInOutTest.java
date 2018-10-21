@@ -36,6 +36,7 @@ public class CheckInOutTest {
         when(lastCheckInDateTime.getYear()).thenReturn(2018);
         when(lastCheckInDateTime.getMonth()).thenReturn(10);
         when(lastCheckInDateTime.getMonthDay()).thenReturn(20);
+        when(lastCheckInDateTime.compareTimeWithCheckOutDateTime(actualDateTime)).thenReturn(false);
 
         CheckInOut checkInOut = new CheckInOut();
         checkInOut.setDateTime(lastCheckInDateTime);
@@ -51,13 +52,14 @@ public class CheckInOutTest {
     public void checkOutAfter40Minutes() throws LessThanFortyMinutesTrainingException {
         DateTime actualDateTime = mock(DateTime.class);
 
-        when(actualDateTime.getHour()).thenReturn(11);
-        when(actualDateTime.getMinutes()).thenReturn(00);
-
+        when(actualDateTime.getHour()).thenReturn(10);
+        when(actualDateTime.getMinutes()).thenReturn(40);
 
         DateTime lastCheckInDateTime = mock(DateTime.class);
         when(lastCheckInDateTime.getHour()).thenReturn(10);
         when(lastCheckInDateTime.getMinutes()).thenReturn(00);
+
+        when(lastCheckInDateTime.compareTimeWithCheckOutDateTime(actualDateTime)).thenReturn(true);
 
         CheckInOut checkInOut = new CheckInOut();
         checkInOut.setDateTime(lastCheckInDateTime);
@@ -80,12 +82,10 @@ public class CheckInOutTest {
         when(databaseReference.child("profile/"+profile.getCode()+"/progress")).thenReturn(databaseReference);
         when(databaseReference.setValue(profile)).thenReturn(null);
 
-        Assert.assertEquals(true,lastCheckInDateTime.compareTimeWithCheckOutDateTime(actualDateTime));
+        checkInOut.checkOut(actualDateTime,profile);
 
-//        checkInOut.checkOut(actualDateTime,profile);
-//
-//        Assert.assertEquals(false,checkInOut.isCheckIn());
-//        Assert.assertEquals(actualDateTime,checkInOut.getDateTime());
+        Assert.assertEquals(false,checkInOut.isCheckIn());
+        Assert.assertEquals(actualDateTime,checkInOut.getDateTime());
 
     }
 }

@@ -55,6 +55,6 @@ public class ProfileFirebaseDAO extends Observable {
 
     public boolean checkInOut(Profile profile){
         DatabaseReference firebaseReference = FirebaseDatabase.getInstance().getReference();
-        return firebaseReference.child("profile/"+profile.getCode()).setValue(profile.getCheckInOut()).isSuccessful();
+        return firebaseReference.child("profile/"+profile.getCode()+"/checkInOut").setValue(profile.getCheckInOut()).isSuccessful();
     }
 }

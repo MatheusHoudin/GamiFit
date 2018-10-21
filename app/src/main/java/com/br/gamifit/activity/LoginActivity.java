@@ -13,6 +13,7 @@ import com.br.gamifit.controller.LoginController;
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.model.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
 import java.util.Observable;
 import java.util.Observer;

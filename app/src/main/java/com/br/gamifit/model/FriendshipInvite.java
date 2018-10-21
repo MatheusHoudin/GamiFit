@@ -1,6 +1,8 @@
 package com.br.gamifit.model;
 
-public class FriendshipInvite{
+import java.io.Serializable;
+
+public class FriendshipInvite implements Serializable {
     private User user;
     private User userToInvite;
     private boolean active;
