@@ -109,6 +109,10 @@
     <string name="scanned_code_not_equals_to_gym_code">Este código não se refere a esta academia</string>
     <string name="exercising_for_less_than_forty_minutes">Você não completou a meta de 40 minutos diários</string>
     <string name="trying_to_checkin_twice_a_day">Não é possível fazer check in duas vezes no mesmo dia</string>
+    <string name="could_not_retrieve_user_location">Não foi possível obter sua localização</string>
+    <string name="user_is_far_away_from_gym">Você está longe da academia, chegue mais perto</string>
+    <string name="required_permission_was_not_granted">É necessário permitir acesso a sua lozalização para fazer check in ou check out</string>
+    <string name="try_to_checkin_checkout_again">Agora você pode fazer check in/check out, tente novamente</string>
 
     <string name="passwords_are_not_the_same">Senhas não coincidem</string>
     <string name="weak_password">Senha fraca, tente utilizar mais caracteres</string>

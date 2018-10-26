@@ -2,8 +2,8 @@
 <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
 <solid android:color="@color/colorPrimary"></solid>
 
-<gradient   android:useLevel="true" android:endColor="@android:color/holo_green_dark"
-    android:startColor="@color/colorPrimaryLight"
-    android:centerColor="@android:color/holo_green_light">
+<gradient   android:useLevel="true" android:endColor="@color/colorPrimary"
+    android:startColor="@color/colorPrimary"
+    android:centerColor="@color/colorPrimaryLight">
 </gradient>
 </shape>

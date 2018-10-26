@@ -17,6 +17,6 @@ public class LocalizationTest {
         otherLocalization.setLatitude(-37.781043);
 
         Assert.assertEquals(0.0641218463381177,localization.calculateDistance(otherLocalization),0);
-        // The last three values after the dot means meters, 0.0641218463381177 for example has 64 meters distance
+        // The three values after the dot means meters, 0.0641218463381177 for example has a distance of 64 meters
     }
 }

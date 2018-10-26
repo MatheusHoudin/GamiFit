@@ -2,9 +2,11 @@ package com.br.gamifit.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -68,6 +70,18 @@ public class GymProfileActivity extends AppCompatActivity
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case GymProfileController.REQUEST_LOCATION_SERVICES:
+                if(grantResults.length >=0 && grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){
+                    showToastMessage(this.getString(R.string.try_to_checkin_checkout_again));
+                }else{
+                    showToastMessage(this.getString(R.string.required_permission_was_not_granted));
+                }
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -79,7 +93,6 @@ public class GymProfileActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         this.menu=menu;
         getMenuInflater().inflate(R.menu.my_gym_profile, menu);
         return true;

@@ -16,6 +16,8 @@ public class Gym implements Serializable{
     private Localization localization;
     private User gymOwner;
 
+    public static final float MAXIMUM_DISTANCE_TO_CHECKINOUT = 0.030f;
+
     private List<Profile> usersProfile;
 
     public Gym(){
