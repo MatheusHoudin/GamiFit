@@ -35,7 +35,7 @@ public class MyGymListController implements Observer{
     }
 
     public void getAllMyGyms(){
-        String loggedUserCode = MyPreferences.getMyPreferences(myGymListActivity.getApplicationContext()).getUserCode();
+        String loggedUserCode = new MyPreferences(myGymListActivity).getUserCode();
         GymFirebaseDAO gymFirebaseDAO = FirebaseFactory.getGymFirebaseDAO();
         gymFirebaseDAO.getAllMyGyms(loggedUserCode);
     }

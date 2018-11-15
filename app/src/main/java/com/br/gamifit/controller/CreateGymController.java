@@ -7,9 +7,12 @@ import android.widget.Toast;
 
 import com.br.gamifit.R;
 import com.br.gamifit.activity.CreateGymActivity;
+import com.br.gamifit.dao_factory.FirebaseFactory;
+import com.br.gamifit.database.GymFirebaseDAO;
 import com.br.gamifit.helper.MyPreferences;
 import com.br.gamifit.model.Gym;
 import com.br.gamifit.model.Localization;
+import com.br.gamifit.model.ObserverResponse;
 import com.br.gamifit.model.User;
 import com.br.gamifit.model.exception.InvalidGymDataException;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -17,7 +20,10 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
-public class CreateGymController {
+import java.util.Observable;
+import java.util.Observer;
+
+public class CreateGymController implements Observer {
     private static CreateGymController createGymController;
     private CreateGymActivity createGymActivity;
     public static final int PLACE_PICKER_REQUEST = 1;
@@ -32,10 +38,15 @@ public class CreateGymController {
     }
 
     public static CreateGymController getCreateGymController(CreateGymActivity createGymActivity) {
-        if(createGymController==null){
+        if(createGymController==null) {
             createGymController = new CreateGymController(createGymActivity);
+            setUpObservable();
         }
         return createGymController;
+    }
+
+    private static void setUpObservable(){
+        FirebaseFactory.getGymFirebaseDAO().addObserver(createGymController);
     }
 
     private View.OnClickListener btnCreateGymOnClickListener = new View.OnClickListener() {
@@ -51,8 +62,6 @@ public class CreateGymController {
             accessLocalization();
         }
     };
-
-
 
     private boolean verifyHasAllDataToMakeTheGym(){
         String gymName = createGymActivity.getGymName().getText().toString();
@@ -75,15 +84,9 @@ public class CreateGymController {
 
     public void createGym(){
         if(verifyHasAllDataToMakeTheGym()){
-            User user = MyPreferences.getMyPreferences(createGymActivity.getApplicationContext()).getUser();
+            User user = new MyPreferences(createGymActivity).getUser();
             gym.setGymOwner(user);
-            Exception exception = gym.saveGym();
-            if(exception==null){
-                createGymActivity.showToastMessage(createGymActivity.getString(R.string.gym_created_sucessfully));
-                createGymActivity.finish();
-            }else{
-                createGymActivity.showToastMessage(createGymActivity.getString(R.string.gym_created_not_sucessfully));
-            }
+            gym.saveGym();
         }
     }
 
@@ -100,5 +103,28 @@ public class CreateGymController {
 
     public void setGymPlace(Place gymPlace) {
         this.gymPlace = gymPlace;
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        if(observable instanceof GymFirebaseDAO){
+            if(o instanceof ObserverResponse){
+                ObserverResponse response = (ObserverResponse) o;
+                switch (response.getMethod()){
+                    case "createGym":
+                        handleCreateGymResult((Exception) response.getContent());
+                        break;
+                }
+            }
+        }
+    }
+
+    private void handleCreateGymResult(Exception exception){
+        if(exception==null){
+            createGymActivity.showToastMessage(createGymActivity.getString(R.string.gym_created_sucessfully));
+            createGymActivity.finish();
+        }else{
+            createGymActivity.showToastMessage(createGymActivity.getString(R.string.gym_created_not_sucessfully));
+        }
     }
 }

@@ -48,9 +48,9 @@ public class Gym implements Serializable{
         return invite;
     }
 
-    public Exception saveGym(){
+    public void saveGym(){
         GymFirebaseDAO gymDAO = FirebaseFactory.getGymFirebaseDAO();
-        return gymDAO.createGym(this);
+        gymDAO.createGym(this);
     }
 
     public boolean sendInviteToJoin(User userToInvitate){

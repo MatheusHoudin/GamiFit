@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.br.gamifit.R;
+import com.br.gamifit.adapter.GymUserProfileListAdapter;
 import com.br.gamifit.adapter.ProfileListAdapter;
 import com.br.gamifit.controller.ProfileFragmentController;
 import com.br.gamifit.model.Gym;

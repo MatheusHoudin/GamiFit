@@ -25,18 +25,16 @@ public class InvitationController implements Observer {
 
     private static InvitationController invitationController;
 
-    public InvitationController(InvitationActivity activity){
-        invitationActivity = activity;
-        context = invitationActivity.getApplicationContext();
+    public InvitationController(){
         invites = new ArrayList<>();
-        adapter = new ReceivedInviteListAdapter(context,invites);
-
-        activity.getListViewInvites().setAdapter(adapter);
     }
 
-    public static InvitationController getInvitationController(InvitationActivity activity) {
+    public void initListAdapter(){
+        adapter = new ReceivedInviteListAdapter(context,invites);
+    }
+    public static InvitationController getInvitationController() {
         if(invitationController==null){
-            invitationController = new InvitationController(activity);
+            invitationController = new InvitationController();
         }
         setUpObservable();
         return invitationController;
@@ -48,9 +46,9 @@ public class InvitationController implements Observer {
     }
 
     public void findMyInvites(){
-        String loggedUserCode = MyPreferences.getMyPreferences(context).getUserCode();
+        String loggedUserCode = new MyPreferences(invitationActivity).getUserCode();
+        Log.i("TATATA",loggedUserCode);
         InviteFirebaseDAO inviteFirebaseDAO = FirebaseFactory.getInviteFirebaseDAO();
-        //TODO: Analize here what happens when the line below is executed, maybe we want it to execute, because it'll clean the list before loading all the itens again
         invites.clear();
         inviteFirebaseDAO.getUserInvites(loggedUserCode);
     }
@@ -66,5 +64,13 @@ public class InvitationController implements Observer {
             //TODO: See if we can optmize here, just by receiving an information that says all the data is loaded, and after it we can call the adapter.notifyDataSerChanged()
             adapter.notifyDataSetChanged();
         }
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public void setInvitationActivity(InvitationActivity invitationActivity) {
+        this.invitationActivity = invitationActivity;
     }
 }

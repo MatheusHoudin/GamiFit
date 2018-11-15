@@ -18,7 +18,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-
+    <string name="account_created_successfully">Conta criada com sucesso</string>
     <string name="selected_location">Localização selecionada</string>
     <string name="map_instructions_alert_dialog_title">Instruções</string>
     <string name="map_instructions_alert_dialog_message">Toque no local do mapa em que sua academia está localizada</string>

@@ -25,6 +25,7 @@ public class User extends Observable implements Serializable{
     private String email;
     private String password;
     private String code;
+    private String token;
 
     public User(){}
 
@@ -104,5 +105,13 @@ public class User extends Observable implements Serializable{
     @Override
     public int hashCode() {
         return code.hashCode();
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
     }
 }

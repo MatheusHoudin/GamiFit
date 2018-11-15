@@ -5,7 +5,7 @@
     android:layout_gravity="center"
     app:cardBackgroundColor="@color/colorPrimaryLightTransparent"
     app:cardCornerRadius="15dp"
-    android:layout_margin="10dp">
+    android:layout_margin="20dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/aaa"

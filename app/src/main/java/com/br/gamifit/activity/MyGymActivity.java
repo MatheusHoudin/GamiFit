@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -19,7 +20,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.br.gamifit.R;
-import com.br.gamifit.adapter.GymPageAdapter;
+import com.br.gamifit.adapter.GymProfileAdapter;
 import com.br.gamifit.controller.MyGymController;
 import com.br.gamifit.model.Gym;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -51,14 +52,19 @@ public class MyGymActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView =  findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         Gym gym = (Gym) bundle.getSerializable("gym");
+        myGymController = MyGymController.getGymController();
+        myGymController.setGym(gym);
+        myGymController.setMyGymActivity(this);
 
-        myGymController = MyGymController.getGymController(this,gym);
+        ViewPager viewPager = findViewById(R.id.my_gym_view_pager);
+        PagerAdapter adapter = new GymProfileAdapter(getSupportFragmentManager(),1);
+        viewPager.setAdapter(adapter);
+
+        NavigationView navigationView =  findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -150,7 +156,7 @@ public class MyGymActivity extends AppCompatActivity
     /**
      *
      * @param scannedUserCode
-     * @return An AlertDialog.Builder, which is the one to ask the user is he/she really wants to send
+     * @return An AlertDialog.Builder, which is the one to ask the user if he/she really wants to send
      * an invite, if yes is chosen so the invite is created and sent, otherwise it does not do nothing
      */
     private AlertDialog createAlertDialog(final String scannedUserCode){
@@ -166,6 +172,4 @@ public class MyGymActivity extends AppCompatActivity
         builder.setNegativeButton(R.string.alert_dialog_no,null);
         return builder.create();
     }
-
-
 }

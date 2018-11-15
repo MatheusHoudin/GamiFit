@@ -3,16 +3,24 @@ package com.br.gamifit.controller;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
 import com.br.gamifit.R;
 import com.br.gamifit.activity.MyGymActivity;
+import com.br.gamifit.adapter.GymUserProfileListAdapter;
 import com.br.gamifit.dao_factory.FirebaseFactory;
+import com.br.gamifit.database.ProfileFirebaseDAO;
 import com.br.gamifit.database.UserFirebaseDAO;
 import com.br.gamifit.helper.QRCodeHelper;
 import com.br.gamifit.helper.ScanHelper;
 import com.br.gamifit.model.Gym;
+import com.br.gamifit.model.ObserverResponse;
+import com.br.gamifit.model.Profile;
 import com.br.gamifit.model.User;
 import com.google.zxing.integration.android.IntentIntegrator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -22,22 +30,38 @@ public class MyGymController implements Observer{
     private Gym gym;
     private MyGymActivity myGymActivity;
 
-    private MyGymController(@NonNull MyGymActivity myGymActivity, Gym gym){
-        this.myGymActivity = myGymActivity;
-        this.gym = gym;
+    private List<Profile> gymUserProfileList;
+    private GymUserProfileListAdapter gymUserProfileListAdapter;
+
+    private MyGymController(){
+        this.gymUserProfileList = new ArrayList<>();
+        gymUserProfileListAdapter = new GymUserProfileListAdapter(gymUserProfileList,myGymActivity);
     }
 
-    public static MyGymController getGymController(MyGymActivity myGymActivity, Gym gym) {
+    public static MyGymController getGymController() {
         if(myGymController ==null){
-            myGymController = new MyGymController(myGymActivity,gym);
+            myGymController = new MyGymController();
+            setupObservable();
+        }
+        return myGymController;
+    }
+
+    public static MyGymController getMyGymController(){
+        if(myGymController == null){
+            myGymController = new MyGymController();
             setupObservable();
         }
         return myGymController;
     }
 
     private static void setupObservable(){
-        UserFirebaseDAO userFirebaseDAO = FirebaseFactory.getUserFirebaseDAO();
-        userFirebaseDAO.addObserver(myGymController);
+        FirebaseFactory.getUserFirebaseDAO().addObserver(myGymController);
+        FirebaseFactory.getProfileFirebaseDAO().addObserver(myGymController);
+    }
+
+    public void getAllGymUsersProfiles(){
+        gymUserProfileList.clear();
+        FirebaseFactory.getProfileFirebaseDAO().getGymUserProfiles(gym.getCode());
     }
 
     /**
@@ -73,11 +97,34 @@ public class MyGymController implements Observer{
     }
     @Override
     public void update(Observable observable, Object o) {
-        if(o instanceof User){
+        if(o instanceof ObserverResponse){
+            ObserverResponse response = (ObserverResponse) o;
             if(observable instanceof UserFirebaseDAO){
-                User userToInvite = (User) o;
-                createAndSendInviteToUser(userToInvite);
+
+                if(response.getMethod().equals("getScannedUser")){
+                    User userToInvite = (User) response.getContent();
+                    createAndSendInviteToUser(userToInvite);
+                }
+            }else if(observable instanceof ProfileFirebaseDAO){
+                if(response.getMethod().equals("getGymUserProfiles")){
+                    Log.i("update","item caught");
+                    gymUserProfileList.add((Profile) response.getContent());
+                    gymUserProfileListAdapter.notifyDataSetChanged();
+                }
             }
+
         }
+    }
+
+    public GymUserProfileListAdapter getGymUserProfileListAdapter() {
+        return gymUserProfileListAdapter;
+    }
+
+    public void setGym(Gym gym) {
+        this.gym = gym;
+    }
+
+    public void setMyGymActivity(MyGymActivity myGymActivity) {
+        this.myGymActivity = myGymActivity;
     }
 }

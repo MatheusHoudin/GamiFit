@@ -3,6 +3,7 @@ package com.br.gamifit.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ListView;
 
 import com.br.gamifit.R;
@@ -34,12 +35,13 @@ public class InvitationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        invitationController = InvitationController.getInvitationController(this);
+        invitationController = InvitationController.getInvitationController();
+        invitationController.setContext(getApplicationContext());
+        invitationController.setInvitationActivity(this);
+        invitationController.initListAdapter();
+        this.listViewInvites.setAdapter(invitationController.getAdapter());
     }
 
-    public ListView getListViewInvites() {
-        return listViewInvites;
-    }
 
     @Override
     protected void onStart() {

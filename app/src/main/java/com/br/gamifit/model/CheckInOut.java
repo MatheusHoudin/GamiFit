@@ -33,7 +33,6 @@ public class CheckInOut implements Serializable {
             this.setDateTime(checkOutDateTime);
             ProfileFirebaseDAO profileFirebaseDAO = FirebaseFactory.getProfileFirebaseDAO();
             profileFirebaseDAO.checkInOut(profile);
-            //TODO: Make here a way to update the offensive days, but take notice whether the removeCheckInData was sucessfully or not
         }else{
             throw new LessThanFortyMinutesTrainingException();
         }

@@ -23,19 +23,24 @@ public class LoginActivity extends AppCompatActivity{
     private EditText txtEmail;
     private EditText txtPassword;
     private Button btnLogin;
-    private Button btnCreateAcount;
+    private Button btnSignUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        btnCreateAcount = findViewById(R.id.btn_create_account);
+        btnSignUp = findViewById(R.id.btn_create_account);
         btnLogin = findViewById(R.id.btn_login);
         txtEmail = findViewById(R.id.txt_email);
         txtPassword = findViewById(R.id.txt_password);
 
         LoginController loginController = LoginController.getLoginController(this);
-
+        loginController.setContext(getApplicationContext());
+        loginController.setLoginView(this);
+        loginController.checkUserAlreadyLoggedIn();
+        this.setBtnCreateAcountOnClickListener(loginController.getBtnSignUpOnClickListener());
+        this.setBtnLoginOnClickListener(loginController.getBtnLoginOnClickListener());
+        Log.i("onCreateLoginActivity","onCreateLoginActivity");
     }
 
     public void setBtnLoginOnClickListener(View.OnClickListener onClickListener){
@@ -43,7 +48,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     public void setBtnCreateAcountOnClickListener(View.OnClickListener onClickListener){
-        this.btnCreateAcount.setOnClickListener(onClickListener);
+        this.btnSignUp.setOnClickListener(onClickListener);
     }
 
 

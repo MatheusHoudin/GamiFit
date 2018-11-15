@@ -4,5 +4,5 @@ import com.br.gamifit.model.Gym;
 
 public interface IGymDAO {
 
-    Exception createGym(Gym gym);
+    void createGym(Gym gym);
 }

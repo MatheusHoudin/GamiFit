@@ -4,20 +4,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.br.gamifit.fragment.GymUserProfileListFragment;
+import com.br.gamifit.model.Gym;
 
-public class GymPageAdapter extends FragmentPagerAdapter {
+public class GymProfileAdapter extends FragmentPagerAdapter {
     private int numTabs;
 
-    public GymPageAdapter(FragmentManager fm,int numTabs){
+    public GymProfileAdapter(FragmentManager fm, int numTabs){
         super(fm);
         this.numTabs = numTabs;
     }
     @Override
     public Fragment getItem(int position) {
-//        switch(position){
-//            case 0:
-//                return new UsersSocialFragment();
-//        }
+        switch (position){
+            case 0:
+                return new GymUserProfileListFragment();
+
+        }
         return null;
     }
 

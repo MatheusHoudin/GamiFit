@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -36,24 +37,25 @@ public class SignUpController implements Observer {
 
     private User user;
 
-    private SignUpController(SignUpActivity activity){
-        this.context = activity.getApplicationContext();
-        this.activity = activity;
-
-        activity.setbtnSignUpOnClickListener(btnSignUpOnClickListener);
+    private SignUpController(){
     }
 
-    public static SignUpController getSignUpController(SignUpActivity activity) {
+    public static SignUpController getSignUpController() {
         if(signUpController==null){
-            signUpController = new SignUpController(activity);
+            signUpController = new SignUpController();
+            setUpObservable();
         }
-        setUpObservable();
+
         return signUpController;
     }
 
     private static void setUpObservable(){
-        UserFirebaseDAO userFirebaseDAO = FirebaseFactory.getUserFirebaseDAO();
-        userFirebaseDAO.addObserver(signUpController);
+        FirebaseFactory.getUserFirebaseDAO().addObserver(signUpController);
+        Log.i("debugando",String.valueOf(FirebaseFactory.getUserFirebaseDAO().countObservers()));
+    }
+
+    public View.OnClickListener getBtnSignUpOnClickListener() {
+        return btnSignUpOnClickListener;
     }
 
     private View.OnClickListener btnSignUpOnClickListener = new View.OnClickListener() {
@@ -65,8 +67,7 @@ public class SignUpController implements Observer {
             String repeatedPassword = activity.getTxtRepeatedPasswod().getText().toString();
             Log.i("debugando","onClick");
             createUser(name,email,password,repeatedPassword);
-
-            }
+        }
 
     };
 
@@ -74,6 +75,8 @@ public class SignUpController implements Observer {
         if(validatePasswordIsEqualToRepeatedPassword(password,repeatedPassword)){
 
             user = new User(name,email,password);
+            String token = FirebaseInstanceId.getInstance().getToken();
+            user.setToken(token);
             Log.i("debugando","createUser");
             user.createUserAccount();
 
@@ -93,9 +96,11 @@ public class SignUpController implements Observer {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Log.i("debugando","logInCreatedUser");
-                    MyPreferences preferences = MyPreferences.getMyPreferences(context);
+                    MyPreferences preferences = new MyPreferences(context);
                     preferences.saveUserData(user.getName(),user.getEmail(),user.getPassword(),user.getCode());
+
+                    activity.showToastMessage(activity.getString(R.string.account_created_successfully));
+                    Log.i("debugando","sucess");
                     activity.openDashboardActivity();
                 }else{
                     //TODO: Change this message, the user even doesnt know what is preferencias
@@ -107,19 +112,22 @@ public class SignUpController implements Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        OperationResult operationResult = (OperationResult) o;
-        Log.i("debugando","update Called");
-        if(operationResult.getOperationCode() == UserFirebaseDAO.OPERATION_CREATE_USER_ACCOUNT){
-            if(operationResult.getCaughtException()==null){
-                user.saveUser();
-            }else{
-                handleAuthExceptions(operationResult.getCaughtException());
-            }
-        }else if(operationResult.getOperationCode() == UserFirebaseDAO.OPERATION_SAVE_USER){
-            if(operationResult.getCaughtException()==null){
-                logInCreatedUser();
-            }else{
-                handleDatabaseExceptions(operationResult.getCaughtException());
+        if(o instanceof OperationResult) {
+            OperationResult operationResult = (OperationResult) o;
+            if(operationResult.getOperationCode() == UserFirebaseDAO.OPERATION_CREATE_USER_ACCOUNT){
+                if(operationResult.getCaughtException()==null){
+                    Log.i("debugando","saving user");
+                    user.saveUser();
+                }else{
+                    handleAuthExceptions(operationResult.getCaughtException());
+                }
+            }else if(operationResult.getOperationCode() == UserFirebaseDAO.OPERATION_SAVE_USER){
+                if(operationResult.getCaughtException()==null){
+                    Log.i("debugando","logincreated");
+                    logInCreatedUser();
+                }else{
+                    handleDatabaseExceptions(operationResult.getCaughtException());
+                }
             }
         }
     }
@@ -132,6 +140,7 @@ public class SignUpController implements Observer {
         }catch(FirebaseAuthInvalidCredentialsException e){
             activity.showToastMessage(activity.getString(R.string.invalid_email));
         }catch(FirebaseAuthUserCollisionException e){
+            e.printStackTrace();
             activity.showToastMessage(activity.getString(R.string.user_account_with_this_email_already_exists));
         }catch(Exception e){
             activity.showToastMessage(activity.getString(R.string.unexpected_problem));
@@ -146,5 +155,13 @@ public class SignUpController implements Observer {
         } catch (Exception e) {
             activity.showToastMessage(activity.getString(R.string.unexpected_problem));
         }
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public void setActivity(SignUpActivity activity) {
+        this.activity = activity;
     }
 }

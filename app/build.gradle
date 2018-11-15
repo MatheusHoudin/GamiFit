@@ -52,7 +52,7 @@ dependencies {
     implementation 'com.google.zxing:core:3.3.0'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
 
-
+    implementation 'com.google.firebase:firebase-messaging:17.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

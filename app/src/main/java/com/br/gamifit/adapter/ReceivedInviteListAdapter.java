@@ -12,18 +12,23 @@ import android.widget.Toast;
 import com.br.gamifit.R;
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.InviteFirebaseDAO;
+import com.br.gamifit.database.ProfileFirebaseDAO;
 import com.br.gamifit.model.GymInvite;
+import com.br.gamifit.model.ObserverResponse;
 import com.google.android.gms.common.data.DataBufferObserver;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class ReceivedInviteListAdapter extends BaseAdapter{
+public class ReceivedInviteListAdapter extends BaseAdapter implements Observer {
     private List<GymInvite> gymInvites;
     private Context context;
 
     public ReceivedInviteListAdapter(Context context,List<GymInvite> invites){
         this.context = context;
         this.gymInvites = invites;
+        FirebaseFactory.getProfileFirebaseDAO().addObserver(this);
     }
     @Override
     public int getCount() {
@@ -57,14 +62,7 @@ public class ReceivedInviteListAdapter extends BaseAdapter{
         View.OnClickListener btnAcceptInviteOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(invite.acceptInvite()){
-                    removeInvite(invite);
-                    Toast.makeText(context,context.getString(R.string.create_gym_profile_sucess_part1)
-                            +invite.getGym().getName()+context.getString(R.string.create_gym_profile_sucess_part2)
-                            ,Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(context,context.getString(R.string.operation_failed),Toast.LENGTH_SHORT).show();
-                }
+                invite.acceptInvite();
             }
         };
         return btnAcceptInviteOnClickListener;
@@ -75,11 +73,8 @@ public class ReceivedInviteListAdapter extends BaseAdapter{
         View.OnClickListener btnRejectInviteOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(invite.rejectInvite()){
-                    removeInvite(invite);
-                }else{
-                    Toast.makeText(context,context.getString(R.string.operation_failed),Toast.LENGTH_SHORT).show();
-                }
+                removeInvite(invite);
+                //Toast.makeText(context,context.getString(R.string.operation_failed),Toast.LENGTH_SHORT).show();
             }
         };
         return btnRejectInviteOnClickListener;
@@ -87,9 +82,36 @@ public class ReceivedInviteListAdapter extends BaseAdapter{
 
     private void removeInvite(GymInvite invite){
         InviteFirebaseDAO inviteFirebaseDAO = FirebaseFactory.getInviteFirebaseDAO();
-        if(inviteFirebaseDAO.delete(invite)){
-            gymInvites.remove(invite);
-            this.notifyDataSetChanged();
+        inviteFirebaseDAO.delete(invite);
+        gymInvites.remove(invite);
+        this.notifyDataSetChanged();
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        if(observable instanceof ProfileFirebaseDAO){
+            if(o instanceof ObserverResponse){
+                ObserverResponse response = (ObserverResponse) o;
+                switch (response.getMethod()){
+                    case "createProfile":
+                        GymInvite invite = (GymInvite) response.getContent();
+                        handleAcceptInvite(invite);
+                        break;
+
+                }
+            }
+
+        }
+    }
+
+    private void handleAcceptInvite(GymInvite invite){
+        if(invite!=null){
+            removeInvite(invite);
+            Toast.makeText(context,context.getString(R.string.create_gym_profile_sucess_part1)
+                            +invite.getGym().getName()+context.getString(R.string.create_gym_profile_sucess_part2)
+                    ,Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context,context.getString(R.string.operation_failed),Toast.LENGTH_SHORT).show();
         }
     }
 }

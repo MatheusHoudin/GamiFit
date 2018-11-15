@@ -10,7 +10,9 @@ import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
+import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.dao_interface.IUserDAO;
+import com.br.gamifit.model.ObserverResponse;
 import com.br.gamifit.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -93,8 +95,9 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
                 if(dataSnapshot.hasChildren()){
                     for(DataSnapshot data:dataSnapshot.getChildren()){
                         User caughtUser = data.getValue(User.class);
+                        ObserverResponse response = new ObserverResponse("getUser",caughtUser);
                         setChanged();
-                        notifyObservers(caughtUser);
+                        notifyObservers(response);
                     }
                 }
             }
@@ -115,8 +118,9 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
                 if(dataSnapshot.hasChildren()){
                     for(DataSnapshot data:dataSnapshot.getChildren()){
                         User caughtUser = data.getValue(User.class);
+                        ObserverResponse response = new ObserverResponse("getScannedUser",caughtUser);
                         setChanged();
-                        notifyObservers(caughtUser);
+                        notifyObservers(response);
                     }
                 }
             }
@@ -134,7 +138,7 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Exception exception = task.getException();
                 OperationResult operationResult = new OperationResult(exception,OPERATION_CREATE_USER_ACCOUNT);
-                saveUser(user);
+                setChanged();
                 notifyObservers(operationResult);
             }
         });
@@ -149,9 +153,14 @@ public class UserFirebaseDAO extends Observable implements IUserDAO {
             public void onComplete(@NonNull Task<Void> task) {
                 Exception exception = task.getException();
                 OperationResult operationResult = new OperationResult(exception,OPERATION_SAVE_USER);
+                setChanged();
                 notifyObservers(operationResult);
             }
         });
+    }
+
+    public void updateUserToken(String token,User user){
+        firebaseDatabase.child("user/"+user.getCode()+"/token").setValue(token);
     }
 
 }

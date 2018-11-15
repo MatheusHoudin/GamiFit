@@ -37,7 +37,15 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp = findViewById(R.id.btn_create_account);
         txtSignIn = findViewById(R.id.txt_sign_in);
 
-        controller = SignUpController.getSignUpController(this);
+        controller = SignUpController.getSignUpController();
+        controller.setActivity(this);
+        controller.setContext(getApplicationContext());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setbtnSignUpOnClickListener(controller.getBtnSignUpOnClickListener());
     }
 
     public void setbtnSignUpOnClickListener(View.OnClickListener onClickListener){

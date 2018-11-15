@@ -24,11 +24,11 @@ public class GymInvite implements Serializable {
         this.setCode(code);
     }
 
-    public boolean acceptInvite() {
-        Progress progress = new Progress(0);
+    public void acceptInvite() {
+        Progress progress = new Progress(0,0,0);
         Profile profile = new Profile(gym,user,progress);
 
-        return profile.save();
+        profile.save(this);
     }
 
     public boolean rejectInvite() {

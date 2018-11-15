@@ -1,6 +1,7 @@
 package com.br.gamifit.helper;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
@@ -41,12 +42,12 @@ public class QRCodeHelper {
         return null;
     }
 
-    public void generateUserQRCodeAlertDialog(Activity activity,String code){
+    public void generateUserQRCodeAlertDialog(Context context, String code){
         Bitmap userQRCodeBitmap = generateQRCodeBitMap(code);
-        ImageView imageView = new ImageView(activity);
+        ImageView imageView = new ImageView(context);
         imageView.setImageBitmap(userQRCodeBitmap);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.user_code);
         builder.setView(imageView);
         builder.setNeutralButton(R.string.close,null);

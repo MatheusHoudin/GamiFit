@@ -15,15 +15,19 @@ import com.br.gamifit.activity.LoginActivity;
 import com.br.gamifit.activity.SignUpActivity;
 import com.br.gamifit.dao_factory.FirebaseFactory;
 import com.br.gamifit.database.UserFirebaseDAO;
+import com.br.gamifit.helper.MyNotificationManager;
 import com.br.gamifit.helper.MyPreferences;
+import com.br.gamifit.model.ObserverResponse;
 import com.br.gamifit.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.database.collection.LLRBNode;
 
 import java.util.Observable;
@@ -38,11 +42,6 @@ public class LoginController implements Observer{
     private LoginController(LoginActivity loginActivity){
         this.loginView = loginActivity;
         this.context = loginView.getApplicationContext();
-        this.loginView.setBtnLoginOnClickListener(btnLoginOnClickListener);
-        this.loginView.setBtnCreateAcountOnClickListener(btnSignUpOnClickListener);
-        FirebaseAuth.getInstance().signOut();
-        //TODO: Check whether the user data is saved on MyPreferences or not when the method checckUserAlreadyLoggedIn() is called
-        //this.checkUserAlreadyLoggedIn();
     }
 
     public static LoginController getLoginController(LoginActivity loginActivity) {
@@ -53,6 +52,14 @@ public class LoginController implements Observer{
         return loginController;
     }
 
+    public void setLoginView(LoginActivity loginView) {
+        this.loginView = loginView;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
     private static void setUpObservable(){
         UserFirebaseDAO userFirebaseDAO = FirebaseFactory.getUserFirebaseDAO();
         userFirebaseDAO.addObserver(loginController);
@@ -60,7 +67,9 @@ public class LoginController implements Observer{
 
     public void checkUserAlreadyLoggedIn(){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser()!=null) loginView.openDashboardActivity();
+        if(firebaseAuth.getCurrentUser()!=null){
+            loginView.openDashboardActivity();
+        }
     }
 
 
@@ -79,8 +88,17 @@ public class LoginController implements Observer{
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
             if(task.isSuccessful()){
-                String email = task.getResult().getUser().getEmail();
-                FirebaseFactory.getUserFirebaseDAO().getUser(email);
+                final String email = task.getResult().getUser().getEmail();
+                task.getResult().getUser().getIdToken(true).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
+                    @Override
+                    public void onSuccess(GetTokenResult getTokenResult) {
+                        MyPreferences myPreferences = new MyPreferences(context);
+                        myPreferences.saveUserToken(getTokenResult.getToken());
+                        Log.i("caught email",email);
+                        FirebaseFactory.getUserFirebaseDAO().getUser(email);
+
+                    }
+                });
             }else{
                 try {
                     throw task.getException();
@@ -116,11 +134,11 @@ public class LoginController implements Observer{
             String userEmail = caughtUser.getEmail();
             String userCode = caughtUser.getCode();
 
-            MyPreferences myPreferences = MyPreferences.getMyPreferences(context);
-
+            MyPreferences myPreferences = new MyPreferences(context);
+            FirebaseFactory.getUserFirebaseDAO().updateUserToken(myPreferences.getUserToken(),caughtUser);
+            myPreferences.clearData();
             boolean commitResult = myPreferences.saveUserData(userName, userEmail,
                     userPassword, userCode);
-
             handleResultLogin(commitResult);
         }else{
             warnUpUserAccountDoesNotExist();
@@ -134,9 +152,14 @@ public class LoginController implements Observer{
 
     @Override
     public void update(Observable observable, Object o) {
-        if(o instanceof User){
-            User caughtUser = (User) o;
-            handleUserPreferencesSaving(caughtUser);
+        if(o instanceof ObserverResponse){
+            ObserverResponse response = (ObserverResponse) o;
+            if(response.getMethod().equals("getUser")){
+
+                User caughtUser = (User) response.getContent();
+                Log.i("updateUserrre",caughtUser.getName());
+                handleUserPreferencesSaving(caughtUser);
+            }
         }
     }
 
@@ -153,17 +176,25 @@ public class LoginController implements Observer{
         return !(email.equals("") || password.equals(""));
     }
 
-    private View.OnClickListener btnLoginOnClickListener = new View.OnClickListener() {
+    public View.OnClickListener btnLoginOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             loginUserWithEmailAndPassword();
         }
     };
 
-    private View.OnClickListener btnSignUpOnClickListener = new View.OnClickListener() {
+    public View.OnClickListener btnSignUpOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             loginView.openSignUpActivity();
         }
     };
+
+    public View.OnClickListener getBtnLoginOnClickListener() {
+        return btnLoginOnClickListener;
+    }
+
+    public View.OnClickListener getBtnSignUpOnClickListener() {
+        return btnSignUpOnClickListener;
+    }
 }

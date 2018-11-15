@@ -27,13 +27,14 @@ public class Profile extends Observable implements Serializable{
         this.setActive(true);
     }
 
-    public boolean save(){
+    public void save(GymInvite invite){
         ProfileFirebaseDAO profileFirebaseDAO = FirebaseFactory.getProfileFirebaseDAO();
-        return profileFirebaseDAO.createProfile(this);
+        profileFirebaseDAO.createProfile(this,invite);
     }
 
     public boolean updateOffensiveDaysNumber(){
         this.progress.setOffensiveDays(this.progress.getOffensiveDays()+1);
+        this.progress.increaseExperiencePointsOnOffensiveDay();
         ProfileFirebaseDAO profileFirebaseDAO = FirebaseFactory.getProfileFirebaseDAO();
         return profileFirebaseDAO.updateOffensiveDays(this);
     }

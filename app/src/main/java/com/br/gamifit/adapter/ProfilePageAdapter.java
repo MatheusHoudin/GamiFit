@@ -4,9 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.br.gamifit.fragment.FeedSocialFragment;
 import com.br.gamifit.fragment.ProfileListFragment;
-import com.br.gamifit.fragment.UsersSocialFragment;
 
 public class ProfilePageAdapter extends FragmentPagerAdapter {
     private int numTabs;
@@ -20,10 +18,7 @@ public class ProfilePageAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0:
                 return new ProfileListFragment();
-            case 1:
-                return new FeedSocialFragment();
-            case 2:
-                return new FeedSocialFragment();
+
         }
         return null;
     }

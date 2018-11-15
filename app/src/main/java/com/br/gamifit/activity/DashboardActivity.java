@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import com.br.gamifit.R;
 import com.br.gamifit.adapter.ProfilePageAdapter;
 import com.br.gamifit.controller.DashboardController;
+import com.br.gamifit.helper.MyPreferences;
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,11 +33,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ViewPager viewPager = findViewById(R.id.profile_view_pager);
-        PagerAdapter adapter = new ProfilePageAdapter(getSupportFragmentManager(),3);
+        PagerAdapter adapter = new ProfilePageAdapter(getSupportFragmentManager(),1);
         viewPager.setAdapter(adapter);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -51,7 +53,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         dashboardController = DashboardController.getDashboardController(this);
         FloatingActionButton fab = findViewById(R.id.fab_create_gym);
         fab.setOnClickListener(dashboardController.getFloatingButtonOnClickListener());
-
+        MyPreferences myPreferences = new MyPreferences(getApplicationContext());
+        this.setTitle(myPreferences.getUserName());
     }
 
 
@@ -111,8 +114,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.sign_out) {
+            dashboardController.signOut();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
